@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Login · Roel's Guitar Shop{% endblock %}
+{% block content %}
+<div class="login-container"><div class="login-overlay"><div class="login-card glass-panel">
+  <div class="login-header">
+    <div class="login-logo-container"><span class="login-logo-icon pulse-animation">{{ icon('guitar', 48) }}</span></div>
+    <h1 class="login-title">Roel's Guitar Shop</h1><p class="login-subtitle">Management System</p>
+  </div>
+  {% if demo_login %}
+  <div class="login-content"><h2 class="login-prompt">Select Demo Account</h2>
+    <form method="post" class="role-buttons">
+      {{ csrf() }}<input type="hidden" name="next" value="{{ next_page }}">
+      {% for role, symbol, description, style in [('Administrator', 'shield', 'Full system access', 'admin'), ('Manager', 'user', 'Manage shop operations', 'manager'), ('Cashier', 'user', 'Point of sale only', 'cashier')] %}
+      <button name="role" value="{{ role }}" class="role-btn {{ style }}-btn"><span class="btn-icon-wrapper">{{ icon(symbol, 24) }}</span><span class="btn-text"><span class="role-name">{{ role }}</span><span class="role-desc">{{ description }}</span></span></button>
+      {% endfor %}
+    </form>
+  </div>
+  {% endif %}
+  <form method="post" class="credential-form">
+    {{ csrf() }}<input type="hidden" name="next" value="{{ next_page }}">
+    <div class="input-group"><label class="input-label" for="username">Username</label><input class="input-field" id="username" name="username" autocomplete="username" required></div>
+    <div class="input-group"><label class="input-label" for="password">Password</label><input class="input-field" id="password" name="password" type="password" autocomplete="current-password" required></div>
+    <button class="btn btn-primary sign-in-btn">Sign in</button>
+  </form>
+  {% if demo_login %}<div class="login-footer"><p>Demo Environment · Version 1.0</p></div>{% endif %}
+</div></div></div>
+{% endblock %}

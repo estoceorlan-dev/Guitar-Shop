@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Products · Roel's Guitar Shop{% endblock %}
+{% block content %}
+<div class="products-container fade-in">
+  <div class="products-header"><h1>Products</h1><p class="text-muted">Browse inventory, pricing, and product details.</p></div>
+  <form method="get" class="products-toolbar card flex-between">
+    <div class="search-wrapper">{{ icon('search', 18) }}<input type="search" name="q" placeholder="Search by name, SKU, or category..." value="{{ search }}" class="toolbar-search" aria-label="Search products"></div>
+    <div class="toolbar-actions"><button class="btn btn-secondary">Search</button>{% if search %}<a class="btn btn-secondary" href="{{ url_for('products') }}">Clear</a>{% endif %}</div>
+  </form>
+  <div class="products-table-container card"><div class="table-responsive"><table class="data-table">
+    <thead><tr><th>SKU</th><th>Product Name</th><th>Category</th><th>Brand</th><th>Cost</th><th>Price</th><th>Stock</th><th>Status</th></tr></thead>
+    <tbody>{% for product in products %}<tr>
+      <td class="text-muted font-medium">{{ product.sku }}</td><td class="font-bold">{{ product.name }}</td><td>{{ product.category_name }}</td><td>{{ product.brand_name or '—' }}</td>
+      <td class="text-muted">{{ product.cost_price|money }}</td><td class="text-accent font-bold">{{ product.selling_price|money }}</td>
+      <td><span class="stock-indicator {{ 'stock-out' if product.stock_quantity == 0 else 'stock-low' if product.stock_quantity <= product.reorder_level else 'stock-good' }}">{{ product.stock_quantity }}</span></td>
+      <td><span class="badge {{ 'badge-success' if product.stock_status == 'Active' else 'badge-warning' if product.stock_status == 'Low Stock' else 'badge-danger' }}">{{ product.stock_status }}</span></td>
+    </tr>{% else %}<tr><td colspan="8" class="text-muted">No products found.</td></tr>{% endfor %}</tbody>
+  </table></div><div class="pagination"><p class="text-muted">Showing {{ products|length }} of {{ total_products }} products</p></div></div>
+</div>
+{% endblock %}

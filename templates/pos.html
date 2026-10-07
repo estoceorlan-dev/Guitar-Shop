@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Point of Sale · Roel's Guitar Shop{% endblock %}
+{% macro filters() %}<input type="hidden" name="q" value="{{ search }}"><input type="hidden" name="category" value="{{ category }}">{% endmacro %}
+{% block content %}
+<div class="pos-container fade-in">
+  <div class="pos-products">
+    <div class="pos-header"><h2>Point of Sale</h2><form method="get" class="search-bar glass-panel">{{ icon('search') }}<input type="search" name="q" placeholder="Search products..." value="{{ search }}" aria-label="Search products"><input type="hidden" name="category" value="{{ category }}"><button class="search-submit" aria-label="Submit search">Go</button></form></div>
+    <nav class="categories-pills" aria-label="Product categories">
+      <a class="pill {{ 'active' if not category }}" href="{{ url_for('pos', q=search) }}">All</a>
+      {% for item in categories %}<a class="pill {{ 'active' if category == item.name }}" href="{{ url_for('pos', q=search, category=item.name) }}">{{ item.name }}</a>{% endfor %}
+    </nav>
+    <div class="product-grid">
+      {% for product in products %}
+      <form method="post" action="{{ url_for('update_cart') }}" class="product-form">
+        {{ csrf() }}{{ filters() }}<input type="hidden" name="product_id" value="{{ product.id }}">
+        <button class="product-card card" name="action" value="add" {% if product.stock_quantity == 0 %}disabled{% endif %} aria-label="Add {{ product.name }} to cart">
+          <span class="product-emoji" aria-hidden="true">{% if product.category_name == 'Pedals' %}🎛️{% elif product.category_name == 'Amplifiers' %}📻{% elif product.category_name == 'Strings' %}🧵{% elif product.category_name == 'Audio Interfaces' %}🎙️{% else %}🎸{% endif %}</span>
+          <span class="product-card-info"><span class="product-card-price">{{ product.selling_price|money }}</span><span class="product-card-name">{{ product.name }}</span><span class="product-card-stock">{{ product.stock_quantity }} in stock</span></span>
+        </button>
+      </form>
+      {% else %}<p class="text-muted">No products found.</p>{% endfor %}
+    </div>
+  </div>
+  <div class="pos-cart glass-panel">
+    <div class="cart-header"><h3>Current Sale</h3>{{ icon('cart') }}</div>
+    <div class="cart-items">
+      {% for item in items %}
+      <div class="cart-item"><div class="cart-item-details"><div class="cart-item-name">{{ item.product.name }}</div><div class="cart-item-price">{{ item.product.selling_price|money }}</div></div>
+        <form method="post" action="{{ url_for('update_cart') }}" class="cart-item-actions">
+          {{ csrf() }}{{ filters() }}<input type="hidden" name="product_id" value="{{ item.product.id }}">
+          <div class="qty-control"><button name="action" value="decrease" aria-label="Decrease {{ item.product.name }} quantity">−</button><span>{{ item.quantity }}</span><button name="action" value="add" aria-label="Increase {{ item.product.name }} quantity">+</button></div>
+          <button class="btn-remove" name="action" value="remove" aria-label="Remove {{ item.product.name }}">Remove</button>
+        </form>
+      </div>
+      {% else %}<div class="empty-cart">{{ icon('cart', 40) }}<p>Cart is empty</p><span class="text-muted text-sm">Add items from the left to begin</span></div>{% endfor %}
+    </div>
+    {% if items %}<form method="post" action="{{ url_for('update_cart') }}" class="clear-cart-form">{{ csrf() }}{{ filters() }}<button class="btn btn-secondary" name="action" value="clear">Clear cart</button></form>{% endif %}
+    <form method="post" action="{{ url_for('checkout') }}">
+      {{ csrf() }}
+      <div class="cart-summary">
+        <div class="summary-row"><span>Subtotal</span><span>{{ subtotal|money }}</span></div>
+        <div class="summary-row"><span>{{ 'Tax included in price' if tax_inclusive else 'Tax (' ~ tax_percent ~ '%)' }}</span><span>{{ tax|money }}</span></div>
+        <div class="summary-row total-row"><span>Total</span><span class="total-amount">{{ total|money }}</span></div>
+      </div>
+      <div class="payment-section">
+        <fieldset class="payment-methods"><legend class="sr-only">Payment method</legend>
+          {% for method, label, symbol in [('cash', 'Cash', 'cash'), ('card', 'Card', 'card'), ('gcash', 'GCash', 'phone')] %}
+          <label class="payment-btn"><input type="radio" name="method" value="{{ method }}" {% if method == 'cash' %}checked{% endif %}>{{ icon(symbol) }}<span>{{ label }}</span></label>
+          {% endfor %}
+        </fieldset>
+        <button class="btn btn-primary btn-checkout" {% if not items %}disabled{% endif %}>Complete Payment</button>
+        <p class="text-muted text-sm">Record a payment already received.</p>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

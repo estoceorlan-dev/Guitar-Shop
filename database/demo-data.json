@@ -1,0 +1,2354 @@
+[
+  {
+    "sql": "INSERT INTO roles (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "ROL-001",
+      "Administrator",
+      "Demo Administrator role"
+    ]
+  },
+  {
+    "sql": "INSERT INTO permissions (id,code,description) VALUES (?,?,?)",
+    "parameters": [
+      "PER-001",
+      "*",
+      "Application permission: *"
+    ]
+  },
+  {
+    "sql": "INSERT INTO role_permissions (role_id,permission_id) VALUES (?,?)",
+    "parameters": [
+      "ROL-001",
+      "PER-001"
+    ]
+  },
+  {
+    "sql": "INSERT INTO users (id,role_id,username,full_name,email,password_hash,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "USR-001",
+      "ROL-001",
+      "admin.demo",
+      "Roel Santos",
+      "staff1@roels-demo.example",
+      "__DEMO_PASSWORD_HASH__",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO roles (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "ROL-002",
+      "Manager",
+      "Demo Manager role"
+    ]
+  },
+  {
+    "sql": "INSERT INTO permissions (id,code,description) VALUES (?,?,?)",
+    "parameters": [
+      "PER-002",
+      "shop.manage",
+      "Application permission: shop.manage"
+    ]
+  },
+  {
+    "sql": "INSERT INTO role_permissions (role_id,permission_id) VALUES (?,?)",
+    "parameters": [
+      "ROL-002",
+      "PER-002"
+    ]
+  },
+  {
+    "sql": "INSERT INTO users (id,role_id,username,full_name,email,password_hash,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "USR-002",
+      "ROL-002",
+      "staff2.demo",
+      "Maria Reyes",
+      "staff2@roels-demo.example",
+      "__DEMO_PASSWORD_HASH__",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO roles (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "ROL-003",
+      "Cashier",
+      "Demo Cashier role"
+    ]
+  },
+  {
+    "sql": "INSERT INTO permissions (id,code,description) VALUES (?,?,?)",
+    "parameters": [
+      "PER-003",
+      "sales.create",
+      "Application permission: sales.create"
+    ]
+  },
+  {
+    "sql": "INSERT INTO role_permissions (role_id,permission_id) VALUES (?,?)",
+    "parameters": [
+      "ROL-003",
+      "PER-003"
+    ]
+  },
+  {
+    "sql": "INSERT INTO users (id,role_id,username,full_name,email,password_hash,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "USR-003",
+      "ROL-003",
+      "staff3.demo",
+      "Juan Cruz",
+      "staff3@roels-demo.example",
+      "__DEMO_PASSWORD_HASH__",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO roles (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "ROL-004",
+      "Inventory Clerk",
+      "Demo Inventory Clerk role"
+    ]
+  },
+  {
+    "sql": "INSERT INTO permissions (id,code,description) VALUES (?,?,?)",
+    "parameters": [
+      "PER-004",
+      "inventory.manage",
+      "Application permission: inventory.manage"
+    ]
+  },
+  {
+    "sql": "INSERT INTO role_permissions (role_id,permission_id) VALUES (?,?)",
+    "parameters": [
+      "ROL-004",
+      "PER-004"
+    ]
+  },
+  {
+    "sql": "INSERT INTO users (id,role_id,username,full_name,email,password_hash,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "USR-004",
+      "ROL-004",
+      "staff4.demo",
+      "Ana Garcia",
+      "staff4@roels-demo.example",
+      "__DEMO_PASSWORD_HASH__",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO roles (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "ROL-005",
+      "Purchasing Officer",
+      "Demo Purchasing Officer role"
+    ]
+  },
+  {
+    "sql": "INSERT INTO permissions (id,code,description) VALUES (?,?,?)",
+    "parameters": [
+      "PER-005",
+      "purchases.manage",
+      "Application permission: purchases.manage"
+    ]
+  },
+  {
+    "sql": "INSERT INTO role_permissions (role_id,permission_id) VALUES (?,?)",
+    "parameters": [
+      "ROL-005",
+      "PER-005"
+    ]
+  },
+  {
+    "sql": "INSERT INTO users (id,role_id,username,full_name,email,password_hash,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "USR-005",
+      "ROL-005",
+      "staff5.demo",
+      "Paolo Mendoza",
+      "staff5@roels-demo.example",
+      "__DEMO_PASSWORD_HASH__",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO roles (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "ROL-006",
+      "Sales Associate",
+      "Demo Sales Associate role"
+    ]
+  },
+  {
+    "sql": "INSERT INTO permissions (id,code,description) VALUES (?,?,?)",
+    "parameters": [
+      "PER-006",
+      "customers.manage",
+      "Application permission: customers.manage"
+    ]
+  },
+  {
+    "sql": "INSERT INTO role_permissions (role_id,permission_id) VALUES (?,?)",
+    "parameters": [
+      "ROL-006",
+      "PER-006"
+    ]
+  },
+  {
+    "sql": "INSERT INTO users (id,role_id,username,full_name,email,password_hash,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "USR-006",
+      "ROL-006",
+      "staff6.demo",
+      "Carla Torres",
+      "staff6@roels-demo.example",
+      "__DEMO_PASSWORD_HASH__",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO roles (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "ROL-007",
+      "Returns Officer",
+      "Demo Returns Officer role"
+    ]
+  },
+  {
+    "sql": "INSERT INTO permissions (id,code,description) VALUES (?,?,?)",
+    "parameters": [
+      "PER-007",
+      "returns.manage",
+      "Application permission: returns.manage"
+    ]
+  },
+  {
+    "sql": "INSERT INTO role_permissions (role_id,permission_id) VALUES (?,?)",
+    "parameters": [
+      "ROL-007",
+      "PER-007"
+    ]
+  },
+  {
+    "sql": "INSERT INTO users (id,role_id,username,full_name,email,password_hash,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "USR-007",
+      "ROL-007",
+      "staff7.demo",
+      "Miguel Ramos",
+      "staff7@roels-demo.example",
+      "__DEMO_PASSWORD_HASH__",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO roles (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "ROL-008",
+      "Bookkeeper",
+      "Demo Bookkeeper role"
+    ]
+  },
+  {
+    "sql": "INSERT INTO permissions (id,code,description) VALUES (?,?,?)",
+    "parameters": [
+      "PER-008",
+      "expenses.manage",
+      "Application permission: expenses.manage"
+    ]
+  },
+  {
+    "sql": "INSERT INTO role_permissions (role_id,permission_id) VALUES (?,?)",
+    "parameters": [
+      "ROL-008",
+      "PER-008"
+    ]
+  },
+  {
+    "sql": "INSERT INTO users (id,role_id,username,full_name,email,password_hash,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "USR-008",
+      "ROL-008",
+      "staff8.demo",
+      "Sofia Aquino",
+      "staff8@roels-demo.example",
+      "__DEMO_PASSWORD_HASH__",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO roles (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "ROL-009",
+      "Report Viewer",
+      "Demo Report Viewer role"
+    ]
+  },
+  {
+    "sql": "INSERT INTO permissions (id,code,description) VALUES (?,?,?)",
+    "parameters": [
+      "PER-009",
+      "reports.view",
+      "Application permission: reports.view"
+    ]
+  },
+  {
+    "sql": "INSERT INTO role_permissions (role_id,permission_id) VALUES (?,?)",
+    "parameters": [
+      "ROL-009",
+      "PER-009"
+    ]
+  },
+  {
+    "sql": "INSERT INTO users (id,role_id,username,full_name,email,password_hash,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "USR-009",
+      "ROL-009",
+      "staff9.demo",
+      "Luis Navarro",
+      "staff9@roels-demo.example",
+      "__DEMO_PASSWORD_HASH__",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO roles (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "ROL-010",
+      "Auditor",
+      "Demo Auditor role"
+    ]
+  },
+  {
+    "sql": "INSERT INTO permissions (id,code,description) VALUES (?,?,?)",
+    "parameters": [
+      "PER-010",
+      "audit.view",
+      "Application permission: audit.view"
+    ]
+  },
+  {
+    "sql": "INSERT INTO role_permissions (role_id,permission_id) VALUES (?,?)",
+    "parameters": [
+      "ROL-010",
+      "PER-010"
+    ]
+  },
+  {
+    "sql": "INSERT INTO users (id,role_id,username,full_name,email,password_hash,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "USR-010",
+      "ROL-010",
+      "staff10.demo",
+      "Isabel Flores",
+      "staff10@roels-demo.example",
+      "__DEMO_PASSWORD_HASH__",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO categories (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "CAT-001",
+      "Electric Guitars",
+      "Electric Guitars department"
+    ]
+  },
+  {
+    "sql": "INSERT INTO brands (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "BRD-001",
+      "Fender",
+      "Demo catalog brand 1"
+    ]
+  },
+  {
+    "sql": "INSERT INTO categories (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "CAT-002",
+      "Acoustic Guitars",
+      "Acoustic Guitars department"
+    ]
+  },
+  {
+    "sql": "INSERT INTO brands (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "BRD-002",
+      "Yamaha",
+      "Demo catalog brand 2"
+    ]
+  },
+  {
+    "sql": "INSERT INTO categories (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "CAT-003",
+      "Strings",
+      "Strings department"
+    ]
+  },
+  {
+    "sql": "INSERT INTO brands (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "BRD-003",
+      "Ernie Ball",
+      "Demo catalog brand 3"
+    ]
+  },
+  {
+    "sql": "INSERT INTO categories (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "CAT-004",
+      "Pedals",
+      "Pedals department"
+    ]
+  },
+  {
+    "sql": "INSERT INTO brands (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "BRD-004",
+      "Boss",
+      "Demo catalog brand 4"
+    ]
+  },
+  {
+    "sql": "INSERT INTO categories (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "CAT-005",
+      "Audio Interfaces",
+      "Audio Interfaces department"
+    ]
+  },
+  {
+    "sql": "INSERT INTO brands (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "BRD-005",
+      "Focusrite",
+      "Demo catalog brand 5"
+    ]
+  },
+  {
+    "sql": "INSERT INTO categories (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "CAT-006",
+      "Accessories",
+      "Accessories department"
+    ]
+  },
+  {
+    "sql": "INSERT INTO brands (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "BRD-006",
+      "Dunlop",
+      "Demo catalog brand 6"
+    ]
+  },
+  {
+    "sql": "INSERT INTO categories (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "CAT-007",
+      "Amplifiers",
+      "Amplifiers department"
+    ]
+  },
+  {
+    "sql": "INSERT INTO brands (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "BRD-007",
+      "Hercules",
+      "Demo catalog brand 7"
+    ]
+  },
+  {
+    "sql": "INSERT INTO categories (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "CAT-008",
+      "Bass Guitars",
+      "Bass Guitars department"
+    ]
+  },
+  {
+    "sql": "INSERT INTO brands (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "BRD-008",
+      "Marshall",
+      "Demo catalog brand 8"
+    ]
+  },
+  {
+    "sql": "INSERT INTO categories (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "CAT-009",
+      "Ukuleles",
+      "Ukuleles department"
+    ]
+  },
+  {
+    "sql": "INSERT INTO brands (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "BRD-009",
+      "Cort",
+      "Demo catalog brand 9"
+    ]
+  },
+  {
+    "sql": "INSERT INTO categories (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "CAT-010",
+      "Cases",
+      "Cases department"
+    ]
+  },
+  {
+    "sql": "INSERT INTO brands (id,name,description) VALUES (?,?,?)",
+    "parameters": [
+      "BRD-010",
+      "Korg",
+      "Demo catalog brand 10"
+    ]
+  },
+  {
+    "sql": "INSERT INTO products (id,sku,name,barcode,category_id,brand_id,cost_price,selling_price,unit,reorder_level,description,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PRD-001",
+      "STR-PL-BLK",
+      "Fender Stratocaster Player",
+      "DEMO-00000001",
+      "CAT-001",
+      "BRD-001",
+      3500000,
+      4250000,
+      "piece",
+      5,
+      "Fender Stratocaster Player — demo catalog item",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO suppliers (id,name,contact_person,email,address,notes) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "SUP-001",
+      "Demo Fender Music Supply",
+      "Roel Santos",
+      "supplier1@roels-demo.example",
+      "Demo Building 1, Quezon City, Philippines",
+      "Fictional supplier for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO customers (id,name,email,address,notes) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "CUS-001",
+      "Roel Santos (Demo Customer)",
+      "customer1@roels-demo.example",
+      "Demo Street 1, Manila, Philippines",
+      "Fictional customer for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO products (id,sku,name,barcode,category_id,brand_id,cost_price,selling_price,unit,reorder_level,description,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PRD-002",
+      "YAM-F310-NAT",
+      "Yamaha F310 Acoustic",
+      "DEMO-00000002",
+      "CAT-002",
+      "BRD-002",
+      600000,
+      850000,
+      "piece",
+      5,
+      "Yamaha F310 Acoustic — demo catalog item",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO suppliers (id,name,contact_person,email,address,notes) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "SUP-002",
+      "Demo Yamaha Music Supply",
+      "Maria Reyes",
+      "supplier2@roels-demo.example",
+      "Demo Building 2, Quezon City, Philippines",
+      "Fictional supplier for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO customers (id,name,email,address,notes) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "CUS-002",
+      "Maria Reyes (Demo Customer)",
+      "customer2@roels-demo.example",
+      "Demo Street 2, Manila, Philippines",
+      "Fictional customer for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO products (id,sku,name,barcode,category_id,brand_id,cost_price,selling_price,unit,reorder_level,description,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PRD-003",
+      "ERN-2221-1046",
+      "Ernie Ball Regular Slinky",
+      "DEMO-00000003",
+      "CAT-003",
+      "BRD-003",
+      30000,
+      45000,
+      "set",
+      5,
+      "Ernie Ball Regular Slinky — demo catalog item",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO suppliers (id,name,contact_person,email,address,notes) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "SUP-003",
+      "Demo Ernie Ball Music Supply",
+      "Juan Cruz",
+      "supplier3@roels-demo.example",
+      "Demo Building 3, Quezon City, Philippines",
+      "Fictional supplier for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO customers (id,name,email,address,notes) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "CUS-003",
+      "Juan Cruz (Demo Customer)",
+      "customer3@roels-demo.example",
+      "Demo Street 3, Manila, Philippines",
+      "Fictional customer for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO products (id,sku,name,barcode,category_id,brand_id,cost_price,selling_price,unit,reorder_level,description,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PRD-004",
+      "BOS-DS1-DIS",
+      "Boss DS-1 Distortion",
+      "DEMO-00000004",
+      "CAT-004",
+      "BRD-004",
+      220000,
+      320000,
+      "piece",
+      5,
+      "Boss DS-1 Distortion — demo catalog item",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO suppliers (id,name,contact_person,email,address,notes) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "SUP-004",
+      "Demo Boss Music Supply",
+      "Ana Garcia",
+      "supplier4@roels-demo.example",
+      "Demo Building 4, Quezon City, Philippines",
+      "Fictional supplier for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO customers (id,name,email,address,notes) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "CUS-004",
+      "Ana Garcia (Demo Customer)",
+      "customer4@roels-demo.example",
+      "Demo Street 4, Manila, Philippines",
+      "Fictional customer for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO products (id,sku,name,barcode,category_id,brand_id,cost_price,selling_price,unit,reorder_level,description,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PRD-005",
+      "FOC-SCA-2I2",
+      "Focusrite Scarlett 2i2",
+      "DEMO-00000005",
+      "CAT-005",
+      "BRD-005",
+      780000,
+      950000,
+      "piece",
+      5,
+      "Focusrite Scarlett 2i2 — demo catalog item",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO suppliers (id,name,contact_person,email,address,notes) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "SUP-005",
+      "Demo Focusrite Music Supply",
+      "Paolo Mendoza",
+      "supplier5@roels-demo.example",
+      "Demo Building 5, Quezon City, Philippines",
+      "Fictional supplier for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO customers (id,name,email,address,notes) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "CUS-005",
+      "Paolo Mendoza (Demo Customer)",
+      "customer5@roels-demo.example",
+      "Demo Street 5, Manila, Philippines",
+      "Fictional customer for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO products (id,sku,name,barcode,category_id,brand_id,cost_price,selling_price,unit,reorder_level,description,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PRD-006",
+      "TOR-PIC-114",
+      "Tortex Picks (12-pack)",
+      "DEMO-00000006",
+      "CAT-006",
+      "BRD-006",
+      12000,
+      25000,
+      "pack",
+      5,
+      "Tortex Picks (12-pack) — demo catalog item",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO suppliers (id,name,contact_person,email,address,notes) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "SUP-006",
+      "Demo Dunlop Music Supply",
+      "Carla Torres",
+      "supplier6@roels-demo.example",
+      "Demo Building 6, Quezon City, Philippines",
+      "Fictional supplier for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO customers (id,name,email,address,notes) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "CUS-006",
+      "Carla Torres (Demo Customer)",
+      "customer6@roels-demo.example",
+      "Demo Street 6, Manila, Philippines",
+      "Fictional customer for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO products (id,sku,name,barcode,category_id,brand_id,cost_price,selling_price,unit,reorder_level,description,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PRD-007",
+      "HER-GS414B",
+      "Hercules Guitar Stand",
+      "DEMO-00000007",
+      "CAT-006",
+      "BRD-007",
+      80000,
+      120000,
+      "piece",
+      5,
+      "Hercules Guitar Stand — demo catalog item",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO suppliers (id,name,contact_person,email,address,notes) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "SUP-007",
+      "Demo Hercules Music Supply",
+      "Miguel Ramos",
+      "supplier7@roels-demo.example",
+      "Demo Building 7, Quezon City, Philippines",
+      "Fictional supplier for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO customers (id,name,email,address,notes) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "CUS-007",
+      "Miguel Ramos (Demo Customer)",
+      "customer7@roels-demo.example",
+      "Demo Street 7, Manila, Philippines",
+      "Fictional customer for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO products (id,sku,name,barcode,category_id,brand_id,cost_price,selling_price,unit,reorder_level,description,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PRD-008",
+      "MAR-MG15G",
+      "Marshall MG15G Amp",
+      "DEMO-00000008",
+      "CAT-007",
+      "BRD-008",
+      450000,
+      650000,
+      "piece",
+      5,
+      "Marshall MG15G Amp — demo catalog item",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO suppliers (id,name,contact_person,email,address,notes) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "SUP-008",
+      "Demo Marshall Music Supply",
+      "Sofia Aquino",
+      "supplier8@roels-demo.example",
+      "Demo Building 8, Quezon City, Philippines",
+      "Fictional supplier for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO customers (id,name,email,address,notes) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "CUS-008",
+      "Sofia Aquino (Demo Customer)",
+      "customer8@roels-demo.example",
+      "Demo Street 8, Manila, Philippines",
+      "Fictional customer for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO products (id,sku,name,barcode,category_id,brand_id,cost_price,selling_price,unit,reorder_level,description,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PRD-009",
+      "COR-CR200-GT",
+      "Cort CR200 Gold Top",
+      "DEMO-00000009",
+      "CAT-001",
+      "BRD-009",
+      1800000,
+      2200000,
+      "piece",
+      5,
+      "Cort CR200 Gold Top — demo catalog item",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO suppliers (id,name,contact_person,email,address,notes) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "SUP-009",
+      "Demo Cort Music Supply",
+      "Luis Navarro",
+      "supplier9@roels-demo.example",
+      "Demo Building 9, Quezon City, Philippines",
+      "Fictional supplier for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO customers (id,name,email,address,notes) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "CUS-009",
+      "Luis Navarro (Demo Customer)",
+      "customer9@roels-demo.example",
+      "Demo Street 9, Manila, Philippines",
+      "Fictional customer for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO products (id,sku,name,barcode,category_id,brand_id,cost_price,selling_price,unit,reorder_level,description,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PRD-010",
+      "KOR-PCH-CLP",
+      "Korg Pitchclip 2",
+      "DEMO-00000010",
+      "CAT-006",
+      "BRD-010",
+      50000,
+      85000,
+      "piece",
+      5,
+      "Korg Pitchclip 2 — demo catalog item",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO suppliers (id,name,contact_person,email,address,notes) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "SUP-010",
+      "Demo Korg Music Supply",
+      "Isabel Flores",
+      "supplier10@roels-demo.example",
+      "Demo Building 10, Quezon City, Philippines",
+      "Fictional supplier for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO customers (id,name,email,address,notes) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "CUS-010",
+      "Isabel Flores (Demo Customer)",
+      "customer10@roels-demo.example",
+      "Demo Street 10, Manila, Philippines",
+      "Fictional customer for demonstrations"
+    ]
+  },
+  {
+    "sql": "INSERT INTO inventory_movements (id,product_id,movement_type,quantity_delta,created_by,reason,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "MOV-OPEN-001",
+      "PRD-001",
+      "opening",
+      10,
+      "USR-001",
+      "Demo opening stock count",
+      "2026-09-19T01:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO inventory_movements (id,product_id,movement_type,quantity_delta,created_by,reason,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "MOV-OPEN-002",
+      "PRD-002",
+      "opening",
+      20,
+      "USR-001",
+      "Demo opening stock count",
+      "2026-09-19T01:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO inventory_movements (id,product_id,movement_type,quantity_delta,created_by,reason,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "MOV-OPEN-003",
+      "PRD-003",
+      "opening",
+      45,
+      "USR-001",
+      "Demo opening stock count",
+      "2026-09-19T01:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO inventory_movements (id,product_id,movement_type,quantity_delta,created_by,reason,created_at) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "MOV-OPEN-004",
+      "PRD-004",
+      "opening",
+      3,
+      "USR-001",
+      "Demo opening stock count",
+      "2026-09-19T01:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchases (id,purchase_number,supplier_id,created_by,subtotal,created_at,notes) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "PUR-001",
+      "PO-DEMO-001",
+      "SUP-001",
+      "USR-005",
+      17500000,
+      "2026-09-19T02:00:00.000Z",
+      "Demo purchase order"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchase_items (id,purchase_id,product_id,quantity,received_quantity,unit_cost) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "PI-001",
+      "PUR-001",
+      "PRD-001",
+      5,
+      5,
+      3500000
+    ]
+  },
+  {
+    "sql": "UPDATE purchases SET status = ?, received_at = ? WHERE id = ?",
+    "parameters": [
+      "received",
+      "2026-09-20T01:00:00.000Z",
+      "PUR-001"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sales (id,receipt_number,customer_id,cashier_id,subtotal,tax_amount,created_at,notes) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SAL-001",
+      "TRX-DEMO-001",
+      "CUS-001",
+      "USR-003",
+      21250000,
+      2550000,
+      "2026-09-21T02:00:00.000Z",
+      "Demo transaction"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sale_items (id,sale_id,product_id,product_name,sku,quantity,unit_price,unit_cost) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SI-001",
+      "SAL-001",
+      "PRD-001",
+      "Fender Stratocaster Player",
+      "STR-PL-BLK",
+      5,
+      4250000,
+      3500000
+    ]
+  },
+  {
+    "sql": "INSERT INTO payments (id,sale_id,method,status,amount,tendered_amount,paid_at,reference_number) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PAY-001",
+      "SAL-001",
+      "cash",
+      "completed",
+      23800000,
+      23810000,
+      "2026-09-21T02:00:00.000Z",
+      "PAYREF-DEMO-001"
+    ]
+  },
+  {
+    "sql": "UPDATE sales SET status = ?, completed_at = ? WHERE id = ?",
+    "parameters": [
+      "completed",
+      "2026-09-21T02:00:00.000Z",
+      "SAL-001"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchases (id,purchase_number,supplier_id,created_by,subtotal,created_at,notes) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "PUR-002",
+      "PO-DEMO-002",
+      "SUP-002",
+      "USR-005",
+      3000000,
+      "2026-09-19T02:00:00.000Z",
+      "Demo purchase order"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchase_items (id,purchase_id,product_id,quantity,received_quantity,unit_cost) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "PI-002",
+      "PUR-002",
+      "PRD-002",
+      5,
+      5,
+      600000
+    ]
+  },
+  {
+    "sql": "UPDATE purchases SET status = ?, received_at = ? WHERE id = ?",
+    "parameters": [
+      "received",
+      "2026-09-20T01:00:00.000Z",
+      "PUR-002"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sales (id,receipt_number,customer_id,cashier_id,subtotal,tax_amount,created_at,notes) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SAL-002",
+      "TRX-DEMO-002",
+      "CUS-002",
+      "USR-003",
+      4250000,
+      510000,
+      "2026-09-21T02:00:00.000Z",
+      "Demo transaction"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sale_items (id,sale_id,product_id,product_name,sku,quantity,unit_price,unit_cost) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SI-002",
+      "SAL-002",
+      "PRD-002",
+      "Yamaha F310 Acoustic",
+      "YAM-F310-NAT",
+      5,
+      850000,
+      600000
+    ]
+  },
+  {
+    "sql": "INSERT INTO payments (id,sale_id,method,status,amount,tendered_amount,paid_at,reference_number) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PAY-002",
+      "SAL-002",
+      "gcash",
+      "completed",
+      4760000,
+      null,
+      "2026-09-21T02:00:00.000Z",
+      "PAYREF-DEMO-002"
+    ]
+  },
+  {
+    "sql": "UPDATE sales SET status = ?, completed_at = ? WHERE id = ?",
+    "parameters": [
+      "completed",
+      "2026-09-21T02:00:00.000Z",
+      "SAL-002"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchases (id,purchase_number,supplier_id,created_by,subtotal,created_at,notes) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "PUR-003",
+      "PO-DEMO-003",
+      "SUP-003",
+      "USR-005",
+      150000,
+      "2026-09-19T02:00:00.000Z",
+      "Demo purchase order"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchase_items (id,purchase_id,product_id,quantity,received_quantity,unit_cost) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "PI-003",
+      "PUR-003",
+      "PRD-003",
+      5,
+      0,
+      30000
+    ]
+  },
+  {
+    "sql": "UPDATE purchases SET status = ?, received_at = ? WHERE id = ?",
+    "parameters": [
+      "draft",
+      null,
+      "PUR-003"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sales (id,receipt_number,customer_id,cashier_id,subtotal,tax_amount,created_at,notes) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SAL-003",
+      "TRX-DEMO-003",
+      "CUS-003",
+      "USR-003",
+      45000,
+      5400,
+      "2026-09-21T02:00:00.000Z",
+      "Demo transaction"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sale_items (id,sale_id,product_id,product_name,sku,quantity,unit_price,unit_cost) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SI-003",
+      "SAL-003",
+      "PRD-003",
+      "Ernie Ball Regular Slinky",
+      "ERN-2221-1046",
+      1,
+      45000,
+      30000
+    ]
+  },
+  {
+    "sql": "INSERT INTO payments (id,sale_id,method,status,amount,tendered_amount,paid_at,reference_number) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PAY-003",
+      "SAL-003",
+      "card",
+      "pending",
+      50400,
+      null,
+      null,
+      "PAYREF-DEMO-003"
+    ]
+  },
+  {
+    "sql": "UPDATE sales SET status = ?, completed_at = ? WHERE id = ?",
+    "parameters": [
+      "draft",
+      null,
+      "SAL-003"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchases (id,purchase_number,supplier_id,created_by,subtotal,created_at,notes) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "PUR-004",
+      "PO-DEMO-004",
+      "SUP-004",
+      "USR-005",
+      1100000,
+      "2026-09-19T02:00:00.000Z",
+      "Demo purchase order"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchase_items (id,purchase_id,product_id,quantity,received_quantity,unit_cost) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "PI-004",
+      "PUR-004",
+      "PRD-004",
+      5,
+      0,
+      220000
+    ]
+  },
+  {
+    "sql": "UPDATE purchases SET status = ?, received_at = ? WHERE id = ?",
+    "parameters": [
+      "ordered",
+      null,
+      "PUR-004"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sales (id,receipt_number,customer_id,cashier_id,subtotal,tax_amount,created_at,notes) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SAL-004",
+      "TRX-DEMO-004",
+      "CUS-004",
+      "USR-003",
+      320000,
+      38400,
+      "2026-09-21T02:00:00.000Z",
+      "Demo transaction"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sale_items (id,sale_id,product_id,product_name,sku,quantity,unit_price,unit_cost) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SI-004",
+      "SAL-004",
+      "PRD-004",
+      "Boss DS-1 Distortion",
+      "BOS-DS1-DIS",
+      1,
+      320000,
+      220000
+    ]
+  },
+  {
+    "sql": "INSERT INTO payments (id,sale_id,method,status,amount,tendered_amount,paid_at,reference_number) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PAY-004",
+      "SAL-004",
+      "bank_transfer",
+      "pending",
+      358400,
+      null,
+      null,
+      "PAYREF-DEMO-004"
+    ]
+  },
+  {
+    "sql": "UPDATE sales SET status = ?, completed_at = ? WHERE id = ?",
+    "parameters": [
+      "held",
+      null,
+      "SAL-004"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchases (id,purchase_number,supplier_id,created_by,subtotal,created_at,notes) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "PUR-005",
+      "PO-DEMO-005",
+      "SUP-005",
+      "USR-005",
+      3900000,
+      "2026-09-19T02:00:00.000Z",
+      "Demo purchase order"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchase_items (id,purchase_id,product_id,quantity,received_quantity,unit_cost) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "PI-005",
+      "PUR-005",
+      "PRD-005",
+      5,
+      0,
+      780000
+    ]
+  },
+  {
+    "sql": "UPDATE purchases SET status = ?, received_at = ? WHERE id = ?",
+    "parameters": [
+      "draft",
+      null,
+      "PUR-005"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sales (id,receipt_number,customer_id,cashier_id,subtotal,tax_amount,created_at,notes) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SAL-005",
+      "TRX-DEMO-005",
+      "CUS-005",
+      "USR-003",
+      950000,
+      114000,
+      "2026-09-21T02:00:00.000Z",
+      "Demo transaction"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sale_items (id,sale_id,product_id,product_name,sku,quantity,unit_price,unit_cost) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SI-005",
+      "SAL-005",
+      "PRD-005",
+      "Focusrite Scarlett 2i2",
+      "FOC-SCA-2I2",
+      1,
+      950000,
+      780000
+    ]
+  },
+  {
+    "sql": "INSERT INTO payments (id,sale_id,method,status,amount,tendered_amount,paid_at,reference_number) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PAY-005",
+      "SAL-005",
+      "other",
+      "pending",
+      1064000,
+      null,
+      null,
+      "PAYREF-DEMO-005"
+    ]
+  },
+  {
+    "sql": "UPDATE sales SET status = ?, completed_at = ? WHERE id = ?",
+    "parameters": [
+      "draft",
+      null,
+      "SAL-005"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchases (id,purchase_number,supplier_id,created_by,subtotal,created_at,notes) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "PUR-006",
+      "PO-DEMO-006",
+      "SUP-006",
+      "USR-005",
+      60000,
+      "2026-09-19T02:00:00.000Z",
+      "Demo purchase order"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchase_items (id,purchase_id,product_id,quantity,received_quantity,unit_cost) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "PI-006",
+      "PUR-006",
+      "PRD-006",
+      5,
+      0,
+      12000
+    ]
+  },
+  {
+    "sql": "UPDATE purchases SET status = ?, received_at = ? WHERE id = ?",
+    "parameters": [
+      "ordered",
+      null,
+      "PUR-006"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sales (id,receipt_number,customer_id,cashier_id,subtotal,tax_amount,created_at,notes) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SAL-006",
+      "TRX-DEMO-006",
+      "CUS-006",
+      "USR-003",
+      25000,
+      3000,
+      "2026-09-21T02:00:00.000Z",
+      "Demo transaction"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sale_items (id,sale_id,product_id,product_name,sku,quantity,unit_price,unit_cost) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SI-006",
+      "SAL-006",
+      "PRD-006",
+      "Tortex Picks (12-pack)",
+      "TOR-PIC-114",
+      1,
+      25000,
+      12000
+    ]
+  },
+  {
+    "sql": "INSERT INTO payments (id,sale_id,method,status,amount,tendered_amount,paid_at,reference_number) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PAY-006",
+      "SAL-006",
+      "cash",
+      "pending",
+      28000,
+      null,
+      null,
+      "PAYREF-DEMO-006"
+    ]
+  },
+  {
+    "sql": "UPDATE sales SET status = ?, completed_at = ? WHERE id = ?",
+    "parameters": [
+      "held",
+      null,
+      "SAL-006"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchases (id,purchase_number,supplier_id,created_by,subtotal,created_at,notes) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "PUR-007",
+      "PO-DEMO-007",
+      "SUP-007",
+      "USR-005",
+      400000,
+      "2026-09-19T02:00:00.000Z",
+      "Demo purchase order"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchase_items (id,purchase_id,product_id,quantity,received_quantity,unit_cost) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "PI-007",
+      "PUR-007",
+      "PRD-007",
+      5,
+      0,
+      80000
+    ]
+  },
+  {
+    "sql": "UPDATE purchases SET status = ?, received_at = ? WHERE id = ?",
+    "parameters": [
+      "draft",
+      null,
+      "PUR-007"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sales (id,receipt_number,customer_id,cashier_id,subtotal,tax_amount,created_at,notes) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SAL-007",
+      "TRX-DEMO-007",
+      "CUS-007",
+      "USR-003",
+      120000,
+      14400,
+      "2026-09-21T02:00:00.000Z",
+      "Demo transaction"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sale_items (id,sale_id,product_id,product_name,sku,quantity,unit_price,unit_cost) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SI-007",
+      "SAL-007",
+      "PRD-007",
+      "Hercules Guitar Stand",
+      "HER-GS414B",
+      1,
+      120000,
+      80000
+    ]
+  },
+  {
+    "sql": "INSERT INTO payments (id,sale_id,method,status,amount,tendered_amount,paid_at,reference_number) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PAY-007",
+      "SAL-007",
+      "gcash",
+      "pending",
+      134400,
+      null,
+      null,
+      "PAYREF-DEMO-007"
+    ]
+  },
+  {
+    "sql": "UPDATE sales SET status = ?, completed_at = ? WHERE id = ?",
+    "parameters": [
+      "draft",
+      null,
+      "SAL-007"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchases (id,purchase_number,supplier_id,created_by,subtotal,created_at,notes) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "PUR-008",
+      "PO-DEMO-008",
+      "SUP-008",
+      "USR-005",
+      2250000,
+      "2026-09-19T02:00:00.000Z",
+      "Demo purchase order"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchase_items (id,purchase_id,product_id,quantity,received_quantity,unit_cost) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "PI-008",
+      "PUR-008",
+      "PRD-008",
+      5,
+      0,
+      450000
+    ]
+  },
+  {
+    "sql": "UPDATE purchases SET status = ?, received_at = ? WHERE id = ?",
+    "parameters": [
+      "ordered",
+      null,
+      "PUR-008"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sales (id,receipt_number,customer_id,cashier_id,subtotal,tax_amount,created_at,notes) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SAL-008",
+      "TRX-DEMO-008",
+      "CUS-008",
+      "USR-003",
+      650000,
+      78000,
+      "2026-09-21T02:00:00.000Z",
+      "Demo transaction"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sale_items (id,sale_id,product_id,product_name,sku,quantity,unit_price,unit_cost) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SI-008",
+      "SAL-008",
+      "PRD-008",
+      "Marshall MG15G Amp",
+      "MAR-MG15G",
+      1,
+      650000,
+      450000
+    ]
+  },
+  {
+    "sql": "INSERT INTO payments (id,sale_id,method,status,amount,tendered_amount,paid_at,reference_number) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PAY-008",
+      "SAL-008",
+      "card",
+      "pending",
+      728000,
+      null,
+      null,
+      "PAYREF-DEMO-008"
+    ]
+  },
+  {
+    "sql": "UPDATE sales SET status = ?, completed_at = ? WHERE id = ?",
+    "parameters": [
+      "held",
+      null,
+      "SAL-008"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchases (id,purchase_number,supplier_id,created_by,subtotal,created_at,notes) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "PUR-009",
+      "PO-DEMO-009",
+      "SUP-009",
+      "USR-005",
+      9000000,
+      "2026-09-19T02:00:00.000Z",
+      "Demo purchase order"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchase_items (id,purchase_id,product_id,quantity,received_quantity,unit_cost) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "PI-009",
+      "PUR-009",
+      "PRD-009",
+      5,
+      0,
+      1800000
+    ]
+  },
+  {
+    "sql": "UPDATE purchases SET status = ?, received_at = ? WHERE id = ?",
+    "parameters": [
+      "draft",
+      null,
+      "PUR-009"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sales (id,receipt_number,customer_id,cashier_id,subtotal,tax_amount,created_at,notes) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SAL-009",
+      "TRX-DEMO-009",
+      "CUS-009",
+      "USR-003",
+      2200000,
+      264000,
+      "2026-09-21T02:00:00.000Z",
+      "Demo transaction"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sale_items (id,sale_id,product_id,product_name,sku,quantity,unit_price,unit_cost) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SI-009",
+      "SAL-009",
+      "PRD-009",
+      "Cort CR200 Gold Top",
+      "COR-CR200-GT",
+      1,
+      2200000,
+      1800000
+    ]
+  },
+  {
+    "sql": "INSERT INTO payments (id,sale_id,method,status,amount,tendered_amount,paid_at,reference_number) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PAY-009",
+      "SAL-009",
+      "bank_transfer",
+      "pending",
+      2464000,
+      null,
+      null,
+      "PAYREF-DEMO-009"
+    ]
+  },
+  {
+    "sql": "UPDATE sales SET status = ?, completed_at = ? WHERE id = ?",
+    "parameters": [
+      "draft",
+      null,
+      "SAL-009"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchases (id,purchase_number,supplier_id,created_by,subtotal,created_at,notes) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "PUR-010",
+      "PO-DEMO-010",
+      "SUP-010",
+      "USR-005",
+      250000,
+      "2026-09-19T02:00:00.000Z",
+      "Demo purchase order"
+    ]
+  },
+  {
+    "sql": "INSERT INTO purchase_items (id,purchase_id,product_id,quantity,received_quantity,unit_cost) VALUES (?,?,?,?,?,?)",
+    "parameters": [
+      "PI-010",
+      "PUR-010",
+      "PRD-010",
+      5,
+      0,
+      50000
+    ]
+  },
+  {
+    "sql": "UPDATE purchases SET status = ?, received_at = ? WHERE id = ?",
+    "parameters": [
+      "ordered",
+      null,
+      "PUR-010"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sales (id,receipt_number,customer_id,cashier_id,subtotal,tax_amount,created_at,notes) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SAL-010",
+      "TRX-DEMO-010",
+      null,
+      "USR-003",
+      85000,
+      10200,
+      "2026-09-21T02:00:00.000Z",
+      "Demo transaction"
+    ]
+  },
+  {
+    "sql": "INSERT INTO sale_items (id,sale_id,product_id,product_name,sku,quantity,unit_price,unit_cost) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "SI-010",
+      "SAL-010",
+      "PRD-010",
+      "Korg Pitchclip 2",
+      "KOR-PCH-CLP",
+      1,
+      85000,
+      50000
+    ]
+  },
+  {
+    "sql": "INSERT INTO payments (id,sale_id,method,status,amount,tendered_amount,paid_at,reference_number) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "PAY-010",
+      "SAL-010",
+      "other",
+      "pending",
+      95200,
+      null,
+      null,
+      "PAYREF-DEMO-010"
+    ]
+  },
+  {
+    "sql": "UPDATE sales SET status = ?, completed_at = ? WHERE id = ?",
+    "parameters": [
+      "held",
+      null,
+      "SAL-010"
+    ]
+  },
+  {
+    "sql": "INSERT INTO returns (id,return_number,sale_id,processed_by,reason,refund_amount,refund_method,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "RET-001",
+      "RMA-DEMO-001",
+      "SAL-001",
+      "USR-007",
+      "Unopened item returned",
+      4760000,
+      "cash",
+      "2026-09-21T03:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO return_items (id,return_id,sale_item_id,quantity,refund_amount,restock,condition) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "RI-001",
+      "RET-001",
+      "SI-001",
+      1,
+      4760000,
+      1,
+      "resellable"
+    ]
+  },
+  {
+    "sql": "UPDATE returns SET status = 'completed', completed_at = ? WHERE id = ?",
+    "parameters": [
+      "2026-09-21T04:00:00.000Z",
+      "RET-001"
+    ]
+  },
+  {
+    "sql": "INSERT INTO returns (id,return_number,sale_id,processed_by,reason,refund_amount,refund_method,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "RET-002",
+      "RMA-DEMO-002",
+      "SAL-002",
+      "USR-007",
+      "Unopened item returned",
+      952000,
+      "gcash",
+      "2026-09-21T03:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO return_items (id,return_id,sale_item_id,quantity,refund_amount,restock,condition) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "RI-002",
+      "RET-002",
+      "SI-002",
+      1,
+      952000,
+      1,
+      "resellable"
+    ]
+  },
+  {
+    "sql": "UPDATE returns SET status = 'completed', completed_at = ? WHERE id = ?",
+    "parameters": [
+      "2026-09-21T04:00:00.000Z",
+      "RET-002"
+    ]
+  },
+  {
+    "sql": "INSERT INTO returns (id,return_number,sale_id,processed_by,reason,refund_amount,refund_method,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "RET-003",
+      "RMA-DEMO-003",
+      "SAL-001",
+      "USR-007",
+      "Customer return request awaiting inspection",
+      4760000,
+      "cash",
+      "2026-09-21T03:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO return_items (id,return_id,sale_item_id,quantity,refund_amount,restock,condition) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "RI-003",
+      "RET-003",
+      "SI-001",
+      1,
+      4760000,
+      1,
+      "resellable"
+    ]
+  },
+  {
+    "sql": "INSERT INTO returns (id,return_number,sale_id,processed_by,reason,refund_amount,refund_method,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "RET-004",
+      "RMA-DEMO-004",
+      "SAL-002",
+      "USR-007",
+      "Customer return request awaiting inspection",
+      952000,
+      "gcash",
+      "2026-09-21T03:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO return_items (id,return_id,sale_item_id,quantity,refund_amount,restock,condition) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "RI-004",
+      "RET-004",
+      "SI-002",
+      1,
+      952000,
+      1,
+      "resellable"
+    ]
+  },
+  {
+    "sql": "INSERT INTO returns (id,return_number,sale_id,processed_by,reason,refund_amount,refund_method,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "RET-005",
+      "RMA-DEMO-005",
+      "SAL-001",
+      "USR-007",
+      "Customer return request awaiting inspection",
+      4760000,
+      "cash",
+      "2026-09-21T03:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO return_items (id,return_id,sale_item_id,quantity,refund_amount,restock,condition) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "RI-005",
+      "RET-005",
+      "SI-001",
+      1,
+      4760000,
+      1,
+      "resellable"
+    ]
+  },
+  {
+    "sql": "INSERT INTO returns (id,return_number,sale_id,processed_by,reason,refund_amount,refund_method,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "RET-006",
+      "RMA-DEMO-006",
+      "SAL-002",
+      "USR-007",
+      "Customer return request awaiting inspection",
+      952000,
+      "gcash",
+      "2026-09-21T03:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO return_items (id,return_id,sale_item_id,quantity,refund_amount,restock,condition) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "RI-006",
+      "RET-006",
+      "SI-002",
+      1,
+      952000,
+      1,
+      "resellable"
+    ]
+  },
+  {
+    "sql": "INSERT INTO returns (id,return_number,sale_id,processed_by,reason,refund_amount,refund_method,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "RET-007",
+      "RMA-DEMO-007",
+      "SAL-001",
+      "USR-007",
+      "Customer return request awaiting inspection",
+      4760000,
+      "cash",
+      "2026-09-21T03:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO return_items (id,return_id,sale_item_id,quantity,refund_amount,restock,condition) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "RI-007",
+      "RET-007",
+      "SI-001",
+      1,
+      4760000,
+      1,
+      "resellable"
+    ]
+  },
+  {
+    "sql": "INSERT INTO returns (id,return_number,sale_id,processed_by,reason,refund_amount,refund_method,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "RET-008",
+      "RMA-DEMO-008",
+      "SAL-002",
+      "USR-007",
+      "Customer return request awaiting inspection",
+      952000,
+      "gcash",
+      "2026-09-21T03:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO return_items (id,return_id,sale_item_id,quantity,refund_amount,restock,condition) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "RI-008",
+      "RET-008",
+      "SI-002",
+      1,
+      952000,
+      1,
+      "resellable"
+    ]
+  },
+  {
+    "sql": "INSERT INTO returns (id,return_number,sale_id,processed_by,reason,refund_amount,refund_method,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "RET-009",
+      "RMA-DEMO-009",
+      "SAL-001",
+      "USR-007",
+      "Customer return request awaiting inspection",
+      4760000,
+      "cash",
+      "2026-09-21T03:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO return_items (id,return_id,sale_item_id,quantity,refund_amount,restock,condition) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "RI-009",
+      "RET-009",
+      "SI-001",
+      1,
+      4760000,
+      1,
+      "resellable"
+    ]
+  },
+  {
+    "sql": "INSERT INTO returns (id,return_number,sale_id,processed_by,reason,refund_amount,refund_method,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "RET-010",
+      "RMA-DEMO-010",
+      "SAL-002",
+      "USR-007",
+      "Customer return request awaiting inspection",
+      952000,
+      "gcash",
+      "2026-09-21T03:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO return_items (id,return_id,sale_item_id,quantity,refund_amount,restock,condition) VALUES (?,?,?,?,?,?,?)",
+    "parameters": [
+      "RI-010",
+      "RET-010",
+      "SI-002",
+      1,
+      952000,
+      1,
+      "resellable"
+    ]
+  },
+  {
+    "sql": "INSERT INTO expenses (id,category,amount,description,expense_date,payment_method,recorded_by,reference_number,created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "EXP-001",
+      "Rent",
+      1800000,
+      "Monthly shop rent",
+      "2026-09-11",
+      "cash",
+      "USR-008",
+      "EXPREF-DEMO-001",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO settings (key,value_json,description,updated_by,updated_at) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "shop.name",
+      "\"Roel's Guitar Shop\"",
+      "Receipt shop name",
+      "USR-001",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO expenses (id,category,amount,description,expense_date,payment_method,recorded_by,reference_number,created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "EXP-002",
+      "Utilities",
+      350000,
+      "Electricity bill",
+      "2026-09-12",
+      "bank_transfer",
+      "USR-008",
+      "EXPREF-DEMO-002",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO settings (key,value_json,description,updated_by,updated_at) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "shop.address",
+      "\"Demo Address, Manila, Philippines\"",
+      "Demo shop address",
+      "USR-001",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO expenses (id,category,amount,description,expense_date,payment_method,recorded_by,reference_number,created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "EXP-003",
+      "Utilities",
+      45000,
+      "Water bill",
+      "2026-09-13",
+      "cash",
+      "USR-008",
+      "EXPREF-DEMO-003",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO settings (key,value_json,description,updated_by,updated_at) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "shop.email",
+      "\"shop@roels-demo.example\"",
+      "Demo contact email",
+      "USR-001",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO expenses (id,category,amount,description,expense_date,payment_method,recorded_by,reference_number,created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "EXP-004",
+      "Internet",
+      169900,
+      "Shop internet subscription",
+      "2026-09-14",
+      "bank_transfer",
+      "USR-008",
+      "EXPREF-DEMO-004",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO settings (key,value_json,description,updated_by,updated_at) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "currency",
+      "\"PHP\"",
+      "Currency; money is stored in centavos",
+      "USR-001",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO expenses (id,category,amount,description,expense_date,payment_method,recorded_by,reference_number,created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "EXP-005",
+      "Transportation",
+      80000,
+      "Supplier delivery transport",
+      "2026-09-15",
+      "cash",
+      "USR-008",
+      "EXPREF-DEMO-005",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO settings (key,value_json,description,updated_by,updated_at) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "timezone",
+      "\"Asia/Manila\"",
+      "Display timezone",
+      "USR-001",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO expenses (id,category,amount,description,expense_date,payment_method,recorded_by,reference_number,created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "EXP-006",
+      "Supplies",
+      125000,
+      "Receipt rolls and packing materials",
+      "2026-09-16",
+      "bank_transfer",
+      "USR-008",
+      "EXPREF-DEMO-006",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO settings (key,value_json,description,updated_by,updated_at) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "tax.rate_basis_points",
+      "1200",
+      "Demo tax rate, 100 basis points = 1 percent",
+      "USR-001",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO expenses (id,category,amount,description,expense_date,payment_method,recorded_by,reference_number,created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "EXP-007",
+      "Maintenance",
+      95000,
+      "Display rack repair",
+      "2026-09-17",
+      "cash",
+      "USR-008",
+      "EXPREF-DEMO-007",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO settings (key,value_json,description,updated_by,updated_at) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "tax.price_inclusive",
+      "false",
+      "Demo prices exclude tax",
+      "USR-001",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO expenses (id,category,amount,description,expense_date,payment_method,recorded_by,reference_number,created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "EXP-008",
+      "Marketing",
+      150000,
+      "Demo promotional materials",
+      "2026-09-18",
+      "bank_transfer",
+      "USR-008",
+      "EXPREF-DEMO-008",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO settings (key,value_json,description,updated_by,updated_at) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "receipt.footer",
+      "\"Thank you for shopping with us!\"",
+      "Receipt footer",
+      "USR-001",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO expenses (id,category,amount,description,expense_date,payment_method,recorded_by,reference_number,created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "EXP-009",
+      "Cleaning",
+      60000,
+      "Cleaning supplies",
+      "2026-09-19",
+      "cash",
+      "USR-008",
+      "EXPREF-DEMO-009",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO settings (key,value_json,description,updated_by,updated_at) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "inventory.default_reorder_level",
+      "5",
+      "Default reorder threshold",
+      "USR-001",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO expenses (id,category,amount,description,expense_date,payment_method,recorded_by,reference_number,created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "EXP-010",
+      "Other",
+      35000,
+      "Staff meeting refreshments",
+      "2026-09-20",
+      "bank_transfer",
+      "USR-008",
+      "EXPREF-DEMO-010",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO settings (key,value_json,description,updated_by,updated_at) VALUES (?,?,?,?,?)",
+    "parameters": [
+      "demo.dataset",
+      "\"roels-v1-exact-10\"",
+      "Identifies this fictional seed dataset",
+      "USR-001",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO audit_logs (id,user_id,action,entity_type,entity_id,new_value,metadata,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "AUD-001",
+      "USR-001",
+      "inventory.opening",
+      "inventory_movements",
+      "MOV-OPEN-001",
+      "{\"demo\":true,\"event\":\"inventory.opening\"}",
+      "{\"source\":\"demo-seed\"}",
+      "2026-09-19T01:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO audit_logs (id,user_id,action,entity_type,entity_id,new_value,metadata,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "AUD-002",
+      "USR-001",
+      "inventory.opening",
+      "inventory_movements",
+      "MOV-OPEN-002",
+      "{\"demo\":true,\"event\":\"inventory.opening\"}",
+      "{\"source\":\"demo-seed\"}",
+      "2026-09-19T01:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO audit_logs (id,user_id,action,entity_type,entity_id,new_value,metadata,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "AUD-003",
+      "USR-001",
+      "inventory.opening",
+      "inventory_movements",
+      "MOV-OPEN-003",
+      "{\"demo\":true,\"event\":\"inventory.opening\"}",
+      "{\"source\":\"demo-seed\"}",
+      "2026-09-19T01:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO audit_logs (id,user_id,action,entity_type,entity_id,new_value,metadata,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "AUD-004",
+      "USR-001",
+      "inventory.opening",
+      "inventory_movements",
+      "MOV-OPEN-004",
+      "{\"demo\":true,\"event\":\"inventory.opening\"}",
+      "{\"source\":\"demo-seed\"}",
+      "2026-09-19T01:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO audit_logs (id,user_id,action,entity_type,entity_id,new_value,metadata,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "AUD-005",
+      "USR-005",
+      "purchase.received",
+      "purchases",
+      "PUR-001",
+      "{\"demo\":true,\"event\":\"purchase.received\"}",
+      "{\"source\":\"demo-seed\"}",
+      "2026-09-20T01:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO audit_logs (id,user_id,action,entity_type,entity_id,new_value,metadata,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "AUD-006",
+      "USR-005",
+      "purchase.received",
+      "purchases",
+      "PUR-002",
+      "{\"demo\":true,\"event\":\"purchase.received\"}",
+      "{\"source\":\"demo-seed\"}",
+      "2026-09-20T01:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO audit_logs (id,user_id,action,entity_type,entity_id,new_value,metadata,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "AUD-007",
+      "USR-003",
+      "sale.completed",
+      "sales",
+      "SAL-001",
+      "{\"demo\":true,\"event\":\"sale.completed\"}",
+      "{\"source\":\"demo-seed\"}",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO audit_logs (id,user_id,action,entity_type,entity_id,new_value,metadata,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "AUD-008",
+      "USR-003",
+      "sale.completed",
+      "sales",
+      "SAL-002",
+      "{\"demo\":true,\"event\":\"sale.completed\"}",
+      "{\"source\":\"demo-seed\"}",
+      "2026-09-21T02:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO audit_logs (id,user_id,action,entity_type,entity_id,new_value,metadata,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "AUD-009",
+      "USR-007",
+      "return.completed",
+      "returns",
+      "RET-001",
+      "{\"demo\":true,\"event\":\"return.completed\"}",
+      "{\"source\":\"demo-seed\"}",
+      "2026-09-21T04:00:00.000Z"
+    ]
+  },
+  {
+    "sql": "INSERT INTO audit_logs (id,user_id,action,entity_type,entity_id,new_value,metadata,created_at) VALUES (?,?,?,?,?,?,?,?)",
+    "parameters": [
+      "AUD-010",
+      "USR-007",
+      "return.completed",
+      "returns",
+      "RET-002",
+      "{\"demo\":true,\"event\":\"return.completed\"}",
+      "{\"source\":\"demo-seed\"}",
+      "2026-09-21T04:00:00.000Z"
+    ]
+  }
+]

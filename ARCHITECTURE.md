@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-Roel's Guitar Shop is a desktop/local-first inventory, sales, and shop management system built with **React** and **SQLite**.
+Roel's Guitar Shop is a local-first inventory, sales, and shop management web application built with **Python, Flask, Jinja HTML templates, CSS, and SQLite**.
 
 The system is designed for a small-to-medium guitar/music shop and prioritizes:
 
@@ -16,27 +16,30 @@ The system is designed for a small-to-medium guitar/music shop and prioritizes:
 - Reliable local operation using SQLite
 - Clear separation between UI, business logic, and database access
 
+The implemented pages are login, dashboard, product catalog, and point of sale. They use live SQLite data. The additional modules described below are planned capabilities backed by the existing schema; they do not yet have application pages.
+
 ## 2. Technology Stack
 
 | Layer | Technology |
 |---|---|
-| Frontend | React |
-| Language | JavaScript / TypeScript |
-| UI | React components + CSS/Tailwind if desired |
-| Local database | SQLite |
-| Database access | A SQLite-compatible backend/bridge |
-| State management | React Context, Zustand, or equivalent |
-| Routing | React Router |
-| Charts/Reports | Recharts or equivalent |
-| Authentication | Local application authentication |
-| Packaging | Electron or another desktop shell if a desktop application is required |
+| Server | Flask |
+| Language | Python 3.10+ |
+| Pages | Server-rendered Jinja HTML in `templates/` |
+| Styles and assets | CSS and SVG in `static/` |
+| Local database | SQLite 3.37+ |
+| Database access | Python standard-library `sqlite3` |
+| State management | Signed Flask sessions for identity and cart quantities |
+| Routing | Flask routes and standard HTML links/forms |
+| Reports | SQLite queries and views rendered in HTML |
+| Authentication | Local scrypt password verification; optional demo account selector |
+| Development server | `python -m flask --app app run --debug` |
 
 ### Architecture Style
 
 The application follows a **layered modular architecture**:
 
 ```text
-React UI
+HTML pages in templates/
    ↓
 Pages / Features
    ↓
@@ -486,101 +489,51 @@ Products, categories, brands, suppliers, customers, and users should generally b
 
 ## 6. Application Structure
 
-Recommended React project structure:
-
 ```text
-src/
-├── app/
-│   ├── App.tsx
-│   ├── routes.tsx
-│   └── providers/
-│
-├── components/
-│   ├── ui/
-│   ├── forms/
-│   ├── tables/
-│   ├── modals/
-│   └── layout/
-│
-├── features/
-│   ├── auth/
-│   ├── dashboard/
-│   ├── pos/
-│   ├── products/
-│   ├── categories/
-│   ├── brands/
-│   ├── inventory/
-│   ├── purchases/
-│   ├── suppliers/
-│   ├── sales/
-│   ├── customers/
-│   ├── returns/
-│   ├── expenses/
-│   ├── reports/
-│   ├── users/
-│   └── settings/
-│
-├── services/
-│   ├── auth/
-│   ├── inventory/
-│   ├── sales/
-│   ├── purchases/
-│   ├── reports/
-│   └── printing/
-│
-├── repositories/
-│   ├── productRepository.ts
-│   ├── saleRepository.ts
-│   ├── purchaseRepository.ts
-│   ├── inventoryRepository.ts
-│   └── ...
-│
-├── database/
-│   ├── connection.ts
-│   ├── migrations/
-│   ├── schema/
-│   └── seed/
-│
-├── hooks/
-├── utils/
-├── types/
-├── constants/
-└── main.tsx
+app.py                  Flask application factory, routes, authentication, role checks
+services.py             Catalog queries, authoritative cart totals, sale posting
+requirements.txt        Python dependencies
+templates/
+  base.html             Shared document, styles, header, flash messages
+  macros.html           CSRF fields and inline SVG icons
+  login.html
+  dashboard.html
+  products.html
+  pos.html
+  error.html
+  partials/sidebar.html
+static/
+  css/                  Shared and page-specific styles
+  favicon.svg
+database/
+  __init__.py           Connections, initialization, transactions, Flask CLI
+  schema.sql            Existing tables, views, constraints, posting triggers
+  seed.py               Python demo seeder and scrypt utilities
+  demo-data.json        Original fictional records and posting operations
+  demo-queries.sql      Sample reports
+  data/                 Local SQLite files (ignored by Git)
+tests/
+  test_app.py            Flask routes, roles, cart, checkout, CLI
+  test_database.py       Schema invariants and original demo coverage
+instance/               Generated persistent session key (ignored by Git)
 ```
 
 ## 7. Feature Responsibilities
 
-Each feature should contain its own UI and feature-specific logic where practical.
-
-Example:
+The browser submits ordinary HTML forms to Flask. Routes validate CSRF tokens and user roles, then call application services or database queries. Jinja renders the resulting data through `render_template()`. Every HTML page is in `templates/`; styles and images are served from `static/`.
 
 ```text
-features/pos/
-├── pages/
-│   └── POSPage.tsx
-├── components/
-│   ├── ProductSearch.tsx
-│   ├── Cart.tsx
-│   ├── CartItem.tsx
-│   ├── PaymentModal.tsx
-│   └── ReceiptPreview.tsx
-├── hooks/
-│   └── useCart.ts
-├── pos.types.ts
-└── pos.utils.ts
+Browser HTML link/form
+    -> Flask route and authorization
+    -> Python application service
+    -> sqlite3 connection / transaction
+    -> SQLite constraints, views, and triggers
+    -> Jinja template -> HTML response
 ```
 
-The POS UI should call a sales/application service:
+GET `/`, `/products`, and `/pos` render the shop pages. GET/POST `/login` handles local sign-in. POST `/logout` clears the session. POST `/pos/cart` adds, decreases, removes, or clears cart quantities. POST `/pos/checkout` records a received payment and atomically posts the sale, stock movement, and audit event. Successful form actions redirect to a GET page.
 
-```text
-POSPage
-   ↓
-SaleService
-   ↓
-SaleRepository
-   ↓
-SQLite
-```
+Cart cookies contain product identifiers and quantities. Prices, costs, availability, and configured tax are reloaded from SQLite; the browser cannot set authoritative sale totals. Monetary calculations use integer centavos with half-up rounding. SQL posting triggers remain authoritative for stock consistency and immutable transaction history.
 
 ## 8. Transaction Boundaries
 
@@ -629,6 +582,13 @@ COMMIT
 ```
 
 ## 9. Authentication and Authorization
+
+The Flask implementation loads active users and their active roles from SQLite on each request. Administrator and Manager can access dashboard, products, and POS; Cashier can access POS. Unsupported roles have schema records for future modules but cannot sign in to the current app.
+
+Credential login verifies the existing `scrypt$N$r$p$salt$hash` encoding, including databases previously seeded by the earlier tools. The local demo selector is enabled by default for the three original fictional demo accounts; set `SHOP_DEMO_LOGIN=false` to require credentials. All POST forms carry a session-bound CSRF token. Successful login clears the previous session, and logout clears both identity and cart. Login redirect destinations are restricted to permitted local routes.
+
+The session secret comes from `SECRET_KEY`, or a random key persisted in the ignored `instance/secret-key` file. Keep that key stable across server restarts and shared across workers using the same application instance.
+
 
 Authentication should be handled separately from authorization.
 
@@ -775,7 +735,7 @@ Aggregated Report Data
 Charts / Tables / Export
 ```
 
-Avoid loading all transactions into React and performing large aggregations in the browser.
+Perform aggregations in SQLite and pass only the report results to Jinja templates.
 
 ## 15. SQLite Considerations
 
@@ -837,7 +797,7 @@ Recommended user-facing features:
 
 ## 17. Offline-First Design
 
-The application should remain fully functional without an internet connection.
+The local Flask server and SQLite database support operation without an internet connection. CSS and SVG assets are local; the optional web font falls back to system fonts offline.
 
 Core operations that should work offline:
 
@@ -910,13 +870,13 @@ The most important rule for the system is:
 For example, the POS should not do:
 
 ```text
-React → UPDATE products SET stock = stock - 1
+HTML form → UPDATE products SET stock = stock - 1
 ```
 
 Instead:
 
 ```text
-React POS
+Flask POS route
    ↓
 SaleService.completeSale()
    ↓

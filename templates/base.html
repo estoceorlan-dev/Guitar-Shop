@@ -1,0 +1,36 @@
+{% from 'macros.html' import csrf, icon with context %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Roel's Guitar Shop{% endblock %}</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+  {% for stylesheet in ['base', 'Sidebar', 'Layout', 'Dashboard', 'Products', 'POS', 'Login', 'app'] %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/' ~ stylesheet ~ '.css') }}">
+  {% endfor %}
+</head>
+<body>
+{% if user %}
+<div class="app-container">
+  {% include 'partials/sidebar.html' %}
+  <main class="main-content">
+    <header class="top-header glass-panel">
+      <form class="header-search" action="{{ url_for('pos') }}" method="get">
+        <input type="search" name="q" placeholder="Search products..." class="search-input" aria-label="Search products">
+      </form>
+      <div class="header-actions"><div class="status-indicator"><span class="pulse-dot"></span><span class="status-text">System Online</span></div></div>
+    </header>
+    <div class="content-area">
+{% endif %}
+      {% for category, message in get_flashed_messages(with_categories=true) %}
+      <div class="flash flash-{{ category }}" role="status">{{ message }}</div>
+      {% endfor %}
+      {% block content %}{% endblock %}
+{% if user %}
+    </div>
+  </main>
+</div>
+{% endif %}
+</body>
+</html>

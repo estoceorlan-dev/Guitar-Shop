@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block title %}{{ error.code }} · Roel's Guitar Shop{% endblock %}
+{% block content %}
+<div class="error-page card"><h1>{{ error.code }} · {{ error.name }}</h1><p>{{ error.description }}</p><a class="btn btn-primary" href="{{ url_for('pos') if user and user.role == 'Cashier' else url_for('dashboard') if user else url_for('login') }}">Return to the shop</a></div>
+{% endblock %}

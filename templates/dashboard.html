@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard · Roel's Guitar Shop{% endblock %}
+{% block content %}
+<div class="dashboard-container fade-in">
+  <div class="dashboard-header flex-between"><div><h1>Dashboard</h1><p class="text-muted">Welcome back, here's what's happening at the shop today.</p></div><div class="date-badge glass-panel">{{ today }}</div></div>
+  <div class="kpi-grid">
+    {% for title, value, symbol in [("Today's Sales", sales|money, 'cash'), ('Transactions', transactions, 'cart'), ('Low Stock Items', low_stock, 'warning'), ('Total Revenue (Month)', monthly|money, 'trend')] %}
+    <div class="kpi-card card"><div class="kpi-header flex-between"><span class="kpi-title">{{ title }}</span><span class="kpi-icon-wrapper text-accent">{{ icon(symbol) }}</span></div><div class="kpi-body"><h2 class="kpi-value">{{ value }}</h2></div></div>
+    {% endfor %}
+  </div>
+  <div class="dashboard-content">
+    <div class="recent-sales card">
+      <div class="card-header"><h3>Recent Sales</h3><p class="text-muted">Latest 10 completed transactions</p></div>
+      <div class="table-responsive"><table class="data-table">
+        <thead><tr><th>Transaction ID</th><th>Time</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+        <tbody>{% for sale in recent_sales %}<tr><td class="font-medium text-accent">{{ sale.receipt_number }}</td><td>{{ sale.local_time }}</td><td>{{ sale.items_summary }}</td><td class="font-bold">{{ sale.total_amount|money }}</td><td><span class="badge badge-success">Completed</span></td></tr>{% else %}<tr><td colspan="5" class="text-muted">No completed sales yet.</td></tr>{% endfor %}</tbody>
+      </table></div>
+    </div>
+    <div class="top-products card"><div class="card-header flex-between"><h3>Top Selling Products</h3>{{ icon('guitar') }}</div>
+      <div class="product-list">{% for product in top_products %}<div class="product-list-item flex-between"><div class="product-info"><div class="product-name">{{ product.name }}</div><div class="product-category text-muted">{{ product.category_name }}</div></div><div class="product-stats"><div class="product-sales font-bold">{{ product.sold }} sold</div><div class="product-stock text-muted">{{ product.stock_quantity }} in stock</div></div></div>{% else %}<p class="text-muted">No product sales yet.</p>{% endfor %}</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

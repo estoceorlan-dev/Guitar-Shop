@@ -12,6 +12,18 @@ dist
 dist-ssr
 *.local
 
+# Local SQLite data (recreate with python -m flask --app app db-seed)
+database/data/
+
+# Python environments, bytecode, and local Flask session key
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+instance/
+.env
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
