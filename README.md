@@ -17,7 +17,7 @@ Open http://127.0.0.1:5000. If your database already contains records, skip `db-
 
 The login page retains the demo role selector for Administrator, Manager, and Cashier. You can also sign in with `admin.demo`, `staff2.demo` (Manager), or `staff3.demo` (Cashier), using password `GuitarDemo!2026`. Set `$env:SHOP_DEMO_LOGIN = "false"` to require password login.
 
-Administrator and Manager can access dashboard, products, and POS. Cashier can access POS. Product searches use GET forms; cart actions, logout, and payment recording use POST forms with CSRF protection. The cart persists in the signed Flask session. Checkout reloads database prices and stock, calculates integer-centavo totals, and atomically records the sale, payment, inventory movement, and audit event. Card and GCash options record a payment already received; external payment processing is not integrated.
+Administrator can access every page. Manager can access the shop, catalog, operations, and finance pages. Cashier can access POS, sales history, and customers. Product searches use GET forms; cart actions, logout, and payment recording use POST forms with CSRF protection. The cart persists in the signed Flask session. Checkout reloads database prices and stock, calculates integer-centavo totals, and atomically records the sale, payment, inventory movement, and audit event. Card and GCash options record a payment already received; external payment processing is not integrated.
 
 ## Configuration
 
@@ -39,4 +39,8 @@ python -m unittest discover -s tests -v
 
 `db-init` is repeatable. `db-seed` inserts the original fictional dataset: 20 tables with 10 records each, including purchases, sales, returns, and immutable stock/audit history. Existing version-1 databases and scrypt password hashes remain compatible. Tests use disposable databases and do not change the shop's data.
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for the Flask architecture and planned modules, and [database/README.md](database/README.md) for database rules. Product editing, purchasing, inventory adjustments, customers, returns, settings, and extended reports remain planned modules; the navigation shows the currently implemented pages.
+The full UI includes product management, inventory and movement history, purchases and receiving, suppliers, sales receipts, customers, returns/refunds, expenses, categories, brands, reports, staff/permissions, and settings. The management pages use fictional placeholder records. Add/edit forms, archive/restore, stock adjustments, partial receiving, refund review, search, status filters, CSV exports, report date ranges, receipt printing, and settings controls work with temporary per-browser demo state.
+
+Demo changes are stored in server memory, isolated by a browser session identifier. They reset on server restart or when you select **Settings → Demo data → Reset demo**. Login/logout clears the browser's demo session. The dashboard and POS retain their existing SQLite integration; the placeholder management pages never modify the shop database. Staff and tax settings on these pages are previews and do not change actual authentication or checkout policy.
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the application structure and [database/README.md](database/README.md) for database rules. The placeholder screens are ready to connect to persistent application services later.

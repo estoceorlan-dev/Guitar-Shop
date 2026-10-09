@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import stats_grid, record_table, badge with context %}
+{% block title %}{{ config.title }} · Roel's Guitar Shop{% endblock %}
+{% block content %}
+<div class="management-page fade-in">
+  <div class="page-heading"><div><div class="eyebrow">{{ config.group }}</div><h1>{{ config.title }}</h1><p class="text-muted">{{ config.subtitle }}</p></div><div class="page-actions">
+    <a class="btn btn-secondary" href="{{ url_for('demo.export', module=module, q=search, status=selected_status, tab=tab) }}">{{ icon('download', 17) }}Export</a>
+    {% if config.action %}<a class="btn btn-primary" href="{{ url_for('demo.form_page', module=module) }}">{{ icon('plus', 18) }}{{ config.action }}</a>{% elif module == 'sales' %}<a class="btn btn-primary" href="{{ url_for('pos') }}">{{ icon('plus', 18) }}New sale</a>{% endif %}
+  </div></div>
+  {{ stats_grid(stats) }}
+  {% if module == 'inventory' %}<nav class="page-tabs" aria-label="Inventory views"><a class="{{ 'active' if tab != 'movements' }}" href="{{ url_for('demo.list_page', module=module) }}">Current stock</a><a class="{{ 'active' if tab == 'movements' }}" href="{{ url_for('demo.list_page', module=module, tab='movements') }}">Stock movements</a></nav>{% endif %}
+  {% if module == 'inventory' and tab == 'movements' %}
+  <div class="card table-card"><div class="section-heading"><div><h3>Stock movement history</h3><p class="text-muted">A record of each change to the sample stock.</p></div>{{ icon('clock') }}</div>
+    <div class="table-responsive"><table class="data-table"><thead><tr><th>Date</th><th>Product</th><th>Movement</th><th>Quantity</th><th>Reference / reason</th><th>By</th></tr></thead><tbody>{% for movement in movements %}<tr><td>{{ movement.date }}</td><td>{{ movement.product }}</td><td>{{ movement.movement }}</td><td class="{{ 'text-success' if movement.delta > 0 else 'text-warning' }}">{{ '+' if movement.delta > 0 }}{{ movement.delta }}</td><td>{{ movement.reason }}</td><td>{{ movement.by }}</td></tr>{% endfor %}</tbody></table></div>
+  </div>
+  {% else %}
+  <form class="filter-bar card" method="get"><div class="filter-search">{{ icon('search', 18) }}<input name="q" type="search" value="{{ search }}" placeholder="Search {{ config.title|lower }}..." aria-label="Search {{ config.title|lower }}"></div><select name="status" class="input-field" aria-label="Filter by status"><option value="">All statuses</option>{% for status in config.statuses %}<option {{ 'selected' if selected_status == status }}>{{ status }}</option>{% endfor %}</select><button class="btn btn-secondary">Apply</button>{% if search or selected_status %}<a class="text-link" href="{{ url_for('demo.list_page', module=module) }}">Clear filters</a>{% endif %}</form>
+  {% if config.cards %}
+  <div class="catalog-card-grid">{% for row in rows %}<article class="catalog-category card"><div class="flex-between"><span class="category-icon">{{ icon(config.icon, 26) }}</span>{{ badge(row.status) }}</div><h3><a class="record-link" href="{{ url_for('demo.detail_page', module=module, record_id=row.id) }}">{{ row.name }}</a></h3><p class="text-muted">{{ row.description }}</p><div class="catalog-card-footer"><span class="text-muted">{{ row.products }} products</span><a class="text-link" href="{{ url_for('demo.form_page', module=module, record_id=row.id) }}">Edit {{ icon('edit', 14) }}</a></div></article>{% else %}<div class="card empty-state"><h3>No matches</h3><p class="text-muted">Try another search or add a new record.</p></div>{% endfor %}</div>
+  {% else %}<div class="card table-card">{{ record_table(config, rows, module) }}<div class="table-footer text-muted">Showing {{ rows|length }} of {{ total }} {{ 'products' if module == 'products' else 'records' }}<span>Demo workspace</span></div></div>{% endif %}
+  {% endif %}
+  {% if module == 'users' %}<div class="card permissions-card"><div class="section-heading"><div><h3>Role permissions</h3><p class="text-muted">A quick view of access in the shop.</p></div>{{ icon('shield') }}</div><div class="table-responsive"><table class="data-table"><thead><tr><th>Area</th><th>Administrator</th><th>Manager</th><th>Cashier</th></tr></thead><tbody>{% for label, manager, cashier in [('Point of Sale', true, true), ('Sales & customers', true, true), ('Catalog & inventory', true, false), ('Purchases & returns', true, false), ('Expenses & reports', true, false), ('Staff & settings', false, false)] %}<tr><td>{{ label }}</td><td class="text-success">{{ icon('check', 18) }} Full access</td><td>{{ 'Full access' if manager else '—' }}</td><td>{{ 'Full access' if cashier else '—' }}</td></tr>{% endfor %}</tbody></table></div></div>{% endif %}
+</div>
+{% endblock %}

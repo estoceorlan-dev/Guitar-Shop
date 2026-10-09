@@ -197,6 +197,173 @@ class FlaskTests(unittest.TestCase):
         self.assertNotEqual(result.exit_code, 0)
         self.assertIn('Existing data was preserved', result.output)
 
+    def demo_state(self):
+        with self.client.session_transaction() as session:
+            return self.app.extensions['demo_ui'][session['preview_id']]
+
+    def test_all_management_views_forms_details_and_exports(self):
+        from demo_data import MODULES
+        self.login()
+        for module, config in MODULES.items():
+            with self.subTest(module=module):
+                response = self.client.get('/' + module)
+                self.assertEqual(response.status_code, 200)
+                record_id = self.demo_state()[module][0]['id']
+                self.assertEqual(self.client.get(f'/{module}/{record_id}').status_code, 200)
+                if config['action']:
+                    self.assertEqual(self.client.get(f'/{module}/new').status_code, 200)
+                response = self.client.get(f'/{module}/export')
+                self.assertEqual(response.status_code, 200)
+                self.assertIn('text/csv', response.content_type)
+        for path in ['/reports', '/reports?section=inventory', '/reports?section=expenses', '/reports?section=returns',
+                     '/settings', '/settings?section=sales', '/settings?section=inventory', '/settings?section=data', '/inventory?tab=movements']:
+            self.assertEqual(self.client.get(path).status_code, 200, path)
+
+    def test_new_pages_enforce_roles_on_lists_details_exports_and_posts(self):
+        self.login('Cashier')
+        self.assertEqual(self.client.get('/sales').status_code, 200)
+        self.assertEqual(self.client.get('/customers').status_code, 200)
+        self.assertEqual(self.client.get('/sales/TRX-1035').status_code, 200)
+        for path in ['/inventory', '/purchases/new', '/returns/RMA-301', '/users/export', '/settings', '/reports']:
+            self.assertEqual(self.client.get(path).location, '/pos', path)
+        self.assertEqual(self.post('/purchases/PO-2026/action', action='receive', quantity='1').location, '/pos')
+        self.client = self.app.test_client()
+        self.login('Manager')
+        self.assertEqual(self.client.get('/reports').status_code, 200)
+        self.assertEqual(self.client.get('/users').location, '/')
+        self.assertEqual(self.client.get('/settings').location, '/')
+
+    def test_customer_create_edit_archive_restore_and_browser_isolation(self):
+        self.login('Cashier')
+        response = self.post('/customers/new', name='Demo New Customer', email='demo@example.com', phone='0900 000 0000', notes='Prefers bass guitars')
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('Demo New Customer', self.client.get(response.location).get_data(as_text=True))
+        record_id = response.location.rsplit('/', 1)[-1]
+        response = self.post(f'/customers/{record_id}/edit', name='Updated Demo Customer', email='demo@example.com', phone='0900 000 0001', notes='Updated notes')
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('Updated Demo Customer', self.client.get(response.location).get_data(as_text=True))
+        self.post(f'/customers/{record_id}/action', action='archive')
+        self.assertIn('Updated Demo Customer', self.client.get('/customers?status=Archived').get_data(as_text=True))
+        self.post(f'/customers/{record_id}/action', action='archive')
+        self.assertNotIn('Updated Demo Customer', self.client.get('/customers?status=Archived').get_data(as_text=True))
+        other = self.app.test_client()
+        other.get('/login')
+        with other.session_transaction() as session:
+            token = session['csrf_token']
+        other.post('/login', data={'role': 'Cashier', 'csrf_token': token})
+        self.assertNotIn('Updated Demo Customer', other.get('/customers').get_data(as_text=True))
+        self.assertEqual(self.scalar('SELECT count(*) FROM customers'), 10)
+
+    def test_product_creation_and_stock_adjustment_share_demo_catalog(self):
+        self.login()
+        response = self.post('/products/new', name='Demo Bass', sku='DEMO-BASS-1', category='Electric Guitars', brand='Fender',
+                             cost='123.45', price='200.00', reorder='2', unit='Piece')
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('Demo Bass', self.client.get('/inventory').get_data(as_text=True))
+        self.assertIn('Demo Bass', self.client.get('/inventory/new').get_data(as_text=True))
+        self.post('/inventory/new', product='Demo Bass', movement='Stock in', quantity='3', reason='Sample stock count')
+        product = next(r for r in self.demo_state()['products'] if r['name'] == 'Demo Bass')
+        stock = next(r for r in self.demo_state()['inventory'] if r['name'] == 'Demo Bass')
+        self.assertEqual(product['stock'], 3)
+        self.assertEqual(stock['value'], 37035)
+        response = self.post('/inventory/new', product='Demo Bass', movement='Stock out', quantity='4', reason='Correction')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('negative', response.get_data(as_text=True))
+        self.assertEqual(stock['stock'], 3)
+        self.assertEqual(self.scalar('SELECT count(*) FROM products'), 10)
+        self.assertEqual(self.scalar('SELECT count(*) FROM inventory_movements'), 10)
+
+    def test_purchase_order_partial_receiving_and_terminal_status(self):
+        self.login()
+        response = self.post('/purchases/new', supplier='Manila Music Supply', date='2026-10-07', product='Yamaha F310 Acoustic',
+                             quantity='3', unit_cost='6000.00', status='Draft', notes='Test demo order')
+        record_id = response.location.rsplit('/', 1)[-1]
+        self.post(f'/purchases/{record_id}/action', action='order')
+        original = next(r for r in self.demo_state()['inventory'] if r['name'] == 'Yamaha F310 Acoustic')['stock']
+        self.post(f'/purchases/{record_id}/action', action='receive', quantity='1')
+        purchase = next(r for r in self.demo_state()['purchases'] if r['id'] == record_id)
+        self.assertEqual(purchase['status'], 'Partially received')
+        self.post(f'/purchases/{record_id}/action', action='receive', quantity='2')
+        self.assertEqual(purchase['status'], 'Received')
+        self.post(f'/purchases/{record_id}/action', action='receive', quantity='1')
+        self.assertEqual(next(r for r in self.demo_state()['inventory'] if r['name'] == 'Yamaha F310 Acoustic')['stock'], original + 3)
+        self.assertEqual(self.client.get(f'/purchases/{record_id}/edit').status_code, 302)
+        self.assertEqual(self.scalar('SELECT count(*) FROM purchases'), 10)
+
+    def test_return_receipt_prefill_review_and_refund_report(self):
+        self.login()
+        page = self.client.get('/returns/new?receipt=TRX-1035').get_data(as_text=True)
+        self.assertIn('value="TRX-1035" selected', page)
+        response = self.post('/returns/new', receipt='TRX-1035', product='Fender Stratocaster Player', quantity='1', reason='Unopened',
+                             condition='Resellable', restock='Yes', refund='47600.00', method='Card')
+        self.assertEqual(response.status_code, 302)
+        record_id = response.location.rsplit('/', 1)[-1]
+        before = next(r for r in self.demo_state()['inventory'] if r['name'] == 'Fender Stratocaster Player')['stock']
+        self.post(f'/returns/{record_id}/action', action='complete')
+        self.post(f'/returns/{record_id}/action', action='complete')
+        self.assertEqual(next(r for r in self.demo_state()['inventory'] if r['name'] == 'Fender Stratocaster Player')['stock'], before + 1)
+        returned = next(r for r in self.demo_state()['returns'] if r['id'] == record_id)
+        report = self.client.get('/reports', query_string={'section': 'returns', 'from': returned['date'], 'to': returned['date']})
+        self.assertIn(record_id, report.get_data(as_text=True))
+        self.assertEqual(self.scalar('SELECT count(*) FROM returns'), 10)
+
+    def test_reports_date_range_empty_invalid_and_csv(self):
+        self.login()
+        page = self.client.get('/reports?from=2026-10-07&to=2026-10-07').get_data(as_text=True)
+        self.assertIn('49,112.00', page)
+        self.assertNotIn('TRX-1033', page)
+        export = self.client.get('/reports?from=2026-10-07&to=2026-10-07&export=csv')
+        self.assertIn('TRX-1035', export.get_data(as_text=True))
+        self.assertNotIn('TRX-1033', export.get_data(as_text=True))
+        self.assertIn('No records found', self.client.get('/reports?from=2027-01-01&to=2027-01-07').get_data(as_text=True))
+        self.assertIn('Choose a valid date range', self.client.get('/reports?from=bad&to=also-bad').get_data(as_text=True))
+        self.assertEqual(self.client.get('/reports?from=0001-01-01&to=9999-12-31').status_code, 200)
+
+    def test_filters_csv_and_form_validation(self):
+        self.login()
+        page = self.client.get('/purchases?status=Draft').get_data(as_text=True)
+        self.assertIn('PO-2029', page)
+        self.assertNotIn('PO-2026', page)
+        csv = self.client.get('/customers/export?q=Alex').get_data(as_text=True)
+        self.assertIn('Alex Rivera', csv)
+        self.assertNotIn('Jamie Santos', csv)
+        page = self.client.get('/customers?q=missing').get_data(as_text=True)
+        self.assertIn('No records found', page)
+        response = self.post('/expenses/new', description='Test', category='Other', amount='-1', date='2026-10-07', method='Cash', status='Paid')
+        self.assertIn('valid nonnegative', response.get_data(as_text=True))
+        self.assertEqual(len(self.demo_state()['expenses']), 6)
+        response = self.post('/expenses/new', description='Test', category='Other', amount='1.999', date='2026-10-07', method='Cash', status='Paid')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(self.demo_state()['expenses']), 6)
+        response = self.post('/expenses/new', description='Sample supplies', category='Supplies', amount='120.50', date='2026-10-07', method='Cash', status='Pending')
+        self.assertEqual(response.status_code, 302)
+        record_id = response.location.rsplit('/', 1)[-1]
+        self.post(f'/expenses/{record_id}/action', action='pay')
+        self.assertIn('Sample supplies', self.client.get('/expenses?status=Paid').get_data(as_text=True))
+
+    def test_settings_save_export_reset_and_preserve_real_policy(self):
+        self.login()
+        self.client.get('/settings')
+        response = self.post('/settings?section=shop', shop_name='Preview Shop', address='Demo address', phone='123', email='demo@example.com', receipt_prefix='DEMO', receipt_footer='Come back soon')
+        self.assertIn('Preview Shop', self.client.get(response.location).get_data(as_text=True))
+        self.post('/settings?section=sales', tax_rate='5', cash='on', gcash='on')
+        self.assertEqual(self.demo_state()['settings']['tax_rate'], '5')
+        self.assertFalse(self.demo_state()['settings']['card'])
+        self.assertEqual(self.scalar("SELECT value_json FROM settings WHERE key = 'tax.rate_basis_points'"), '1200')
+        export = self.client.get('/settings?download=demo')
+        self.assertEqual(export.json['settings']['shop_name'], 'Preview Shop')
+        self.assertNotIn('password', export.get_data(as_text=True))
+        self.post('/settings/reset')
+        self.assertEqual(self.demo_state()['settings']['shop_name'], "Roel's Guitar Shop")
+
+    def test_staff_actions_are_preview_only(self):
+        self.login()
+        self.client.get('/users')
+        self.post('/users/STAFF-001/action', action='toggle')
+        self.assertEqual(self.demo_state()['users'][0]['status'], 'Inactive')
+        self.assertEqual(self.scalar("SELECT is_active FROM users WHERE id = 'USR-001'"), 1)
+        self.assertEqual(self.client.get('/').status_code, 200)
+
 
 if __name__ == '__main__':
     unittest.main()

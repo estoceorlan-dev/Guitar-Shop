@@ -16,7 +16,7 @@ The system is designed for a small-to-medium guitar/music shop and prioritizes:
 - Reliable local operation using SQLite
 - Clear separation between UI, business logic, and database access
 
-The implemented pages are login, dashboard, product catalog, and point of sale. They use live SQLite data. The additional modules described below are planned capabilities backed by the existing schema; they do not yet have application pages.
+The UI includes login, dashboard, point of sale, product management, inventory and movement history, purchases/receiving, suppliers, sales receipts, customers, returns/refunds, expenses, categories, brands, reports, staff/permissions, and settings. Dashboard and POS use SQLite. The other management screens currently use fictional placeholder records with interactive, temporary demo state; their persistent business-service integration is the next implementation layer.
 
 ## 2. Technology Stack
 
@@ -492,6 +492,8 @@ Products, categories, brands, suppliers, customers, and users should generally b
 ```text
 app.py                  Flask application factory, routes, authentication, role checks
 services.py             Catalog queries, authoritative cart totals, sale posting
+demo_ui.py              Blueprint for interactive placeholder management screens
+demo_data.py            Fictional fixtures, form/table definitions, navigation
 requirements.txt        Python dependencies
 templates/
   base.html             Shared document, styles, header, flash messages
@@ -499,11 +501,17 @@ templates/
   login.html
   dashboard.html
   products.html
+  management.html       Shared lists, cards, filters, exports, stock history
+  record_form.html      Create/edit and stock adjustment forms
+  record_detail.html    Details, invoices, status actions, related records
+  reports.html          Date ranges, sales chart, payment summary, report tables
+  settings.html         Shop/receipt, sales, inventory, demo data settings
   pos.html
   error.html
   partials/sidebar.html
 static/
   css/                  Shared and page-specific styles
+  js/ui.js              Mobile navigation, printing, purchase subtotal preview
   favicon.svg
 database/
   __init__.py           Connections, initialization, transactions, Flask CLI
@@ -521,6 +529,8 @@ instance/               Generated persistent session key (ignored by Git)
 ## 7. Feature Responsibilities
 
 The browser submits ordinary HTML forms to Flask. Routes validate CSRF tokens and user roles, then call application services or database queries. Jinja renders the resulting data through `render_template()`. Every HTML page is in `templates/`; styles and images are served from `static/`.
+
+`demo_ui.py` registers the management routes through a Flask Blueprint. Module definitions in `demo_data.py` describe navigation, table columns, form fields, and fictional records. Shared templates provide consistent controls across modules, with separate reports and settings layouts. Management mutations operate only on a per-browser copy of the fixtures in `app.extensions['demo_ui']`; a small session identifier selects that copy. Demo state is temporary and never changes SQLite, actual user permissions, or POS totals. Product edits and stock movements, purchase receiving, completed returns, and report totals share the same demo workspace.
 
 ```text
 Browser HTML link/form
@@ -583,7 +593,7 @@ COMMIT
 
 ## 9. Authentication and Authorization
 
-The Flask implementation loads active users and their active roles from SQLite on each request. Administrator and Manager can access dashboard, products, and POS; Cashier can access POS. Unsupported roles have schema records for future modules but cannot sign in to the current app.
+The Flask implementation loads active users and their active roles from SQLite on each request. Administrator can access every page. Manager can access dashboard, POS, catalog, inventory, purchases, suppliers, returns, expenses, and reports. Cashier can access POS, sales history, and customers. The management Blueprint checks these roles for lists, details, forms, exports, and actions. Unsupported roles have schema records for future modules but cannot sign in to the current app.
 
 Credential login verifies the existing `scrypt$N$r$p$salt$hash` encoding, including databases previously seeded by the earlier tools. The local demo selector is enabled by default for the three original fictional demo accounts; set `SHOP_DEMO_LOGIN=false` to require credentials. All POST forms carry a session-bound CSRF token. Successful login clears the previous session, and logout clears both identity and cart. Login redirect destinations are restricted to permitted local routes.
 

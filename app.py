@@ -13,6 +13,8 @@ from flask import Flask, abort, flash, g, redirect, render_template, request, se
 from database import DEFAULT_DATABASE, get_db, init_app, initialize_database, open_database
 from database.seed import verify_password
 from services import cart_totals, catalog, complete_sale
+from demo_data import MODULES, NAVIGATION, allowed_roles
+from demo_ui import init_app as init_demo_ui
 
 ROLES = ('Administrator', 'Manager', 'Cashier')
 MANILA = timezone(timedelta(hours=8))
@@ -39,6 +41,7 @@ def create_app(test_config=None):
             pass
         app.config['SECRET_KEY'] = key_path.read_text(encoding='utf-8')
     init_app(app)
+    init_demo_ui(app)
     db = open_database(app.config['DATABASE'])
     try:
         initialize_database(db)
@@ -68,12 +71,13 @@ def create_app(test_config=None):
 
     @app.context_processor
     def template_context():
-        return {'user': g.user, 'csrf_token': csrf_token}
+        return {'user': g.user, 'csrf_token': csrf_token, 'navigation': NAVIGATION}
 
     @app.template_filter('money')
     def money(centavos):
-        whole, cents = divmod(int(centavos), 100)
-        return f'₱{whole:,}.{cents:02d}'
+        value = int(centavos)
+        whole, cents = divmod(abs(value), 100)
+        return f"{'−' if value < 0 else ''}₱{whole:,}.{cents:02d}"
 
     def default_page():
         return 'pos' if g.user and g.user['role'] == 'Cashier' else 'dashboard'
@@ -114,7 +118,9 @@ def create_app(test_config=None):
                 session.clear()
                 session['user_id'] = account['id']
                 destination = request.form.get('next', '')
-                allowed = ('/pos',) if account['role'] == 'Cashier' else ('/', '/products', '/pos')
+                allowed = ['/pos'] + ['/' + module for module in [*MODULES, 'reports', 'settings'] if account['role'] in allowed_roles(module)]
+                if account['role'] != 'Cashier':
+                    allowed.append('/')
                 return redirect(destination if destination in allowed else ('/pos' if account['role'] == 'Cashier' else '/'))
             flash('Unable to sign in. Check your credentials or initialize the demo database.', 'error')
         return render_template('login.html', roles=ROLES, demo_login=app.config['DEMO_LOGIN'], next_page=request.args.get('next', ''))
@@ -143,13 +149,6 @@ def create_app(test_config=None):
         return render_template('dashboard.html', today=today.strftime('%A, %B %d, %Y'),
                                sales=daily['gross_sales'] if daily else 0, transactions=daily['transactions'] if daily else 0,
                                monthly=monthly, low_stock=low_stock, recent_sales=recent_sales, top_products=top_products)
-
-    @app.get('/products')
-    @roles_required('Administrator', 'Manager')
-    def products():
-        search = request.args.get('q', '').strip()
-        return render_template('products.html', products=catalog(get_db(), search), search=search,
-                               total_products=get_db().execute('SELECT count(*) FROM products WHERE is_active = 1').fetchone()[0])
 
     @app.get('/pos')
     @roles_required(*ROLES)

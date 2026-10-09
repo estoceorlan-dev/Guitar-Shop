@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Edit' if record else config.action }} · {{ config.title }}{% endblock %}
+{% block content %}
+<div class="management-page fade-in">
+  <a class="back-link" href="{{ url_for('demo.detail_page', module=module, record_id=record.id) if record else url_for('demo.list_page', module=module) }}">{{ icon('arrow', 17) }}Back to {{ 'record' if record else config.title|lower }}</a>
+  <div class="page-heading"><div><div class="eyebrow">{{ config.group }}</div><h1>{{ 'Edit ' ~ (record.get('name') or record.id) if record else config.action }}</h1><p class="text-muted">{{ 'Update this sample record.' if record else 'Enter the details to create a sample record.' }}</p></div></div>
+  <div class="form-layout"><form method="post" class="card record-form">
+    {{ csrf() }}
+    {% if error %}<div class="flash flash-error" role="alert">{{ error }}</div>{% endif %}
+    <h3 class="form-section-title">{{ 'Stock adjustment' if module == 'inventory' else 'Record details' }}</h3>
+    <div class="form-grid">
+      {% for item in config.fields %}<div class="input-group {{ 'field-full' if item.type == 'textarea' }}">
+        <label class="input-label" for="field-{{ item.name }}">{{ item.label }}{% if not item.required %}<span class="optional">Optional</span>{% endif %}</label>
+        {% if item.type == 'select' %}<select class="input-field" name="{{ item.name }}" id="field-{{ item.name }}" {{ 'required' if item.required }}>{% for option in item.options %}<option value="{{ option }}" {{ 'selected' if values.get(item.name) == option }}>{{ option }}</option>{% endfor %}</select>
+        {% elif item.type == 'textarea' %}<textarea class="input-field" name="{{ item.name }}" id="field-{{ item.name }}" rows="3" maxlength="2000" {{ 'required' if item.required }}>{{ values.get(item.name, '') }}</textarea>
+        {% else %}<input class="input-field" type="{{ 'number' if item.type == 'money' else item.type }}" id="field-{{ item.name }}" name="{{ item.name }}" value="{{ values.get(item.name, '') }}" {{ 'required' if item.required }} {% if item.type in ['number', 'money'] %}min="{{ 1 if item.name == 'quantity' else 0 }}" step="{{ '0.01' if item.type == 'money' else '1' }}" max="10000000"{% else %}maxlength="2000"{% endif %}>{% endif %}
+      </div>{% endfor %}
+    </div>
+    {% if module == 'purchases' %}<div class="form-total"><span>Order subtotal</span><strong data-order-total>₱0.00</strong></div>{% endif %}
+    <div class="form-footer"><p class="text-muted text-sm">Demo changes are temporary.</p><div class="page-actions"><a class="btn btn-secondary" href="{{ url_for('demo.list_page', module=module) }}">Cancel</a><button class="btn btn-primary">{{ icon('check', 17) }}{{ 'Save changes' if record else 'Save adjustment' if module == 'inventory' else 'Create record' }}</button></div></div>
+  </form><aside class="form-help card"><span class="category-icon">{{ icon(config.icon, 28) }}</span><h3>{{ config.title }}</h3>
+    {% if module == 'inventory' %}<p class="text-muted">Use stock in for new units and stock out for corrections. Add a reason so your team can follow the change.</p><a class="text-link" href="{{ url_for('demo.list_page', module='inventory', tab='movements') }}">View movement history →</a>
+    {% elif module == 'purchases' %}<p class="text-muted">Start with a draft or place the order now. When the delivery arrives, open the order to receive all or part of it.</p>
+    {% elif module == 'returns' %}<p class="text-muted">Match the product to its original receipt. Resellable items may be returned to stock when the refund is completed.</p><a class="text-link" href="{{ url_for('demo.list_page', module='sales') }}">Find the original receipt →</a>
+    {% elif module == 'users' %}<p class="text-muted">Choose a role to preview your team setup. Review the permissions table before assigning access.</p><a class="text-link" href="{{ url_for('demo.list_page', module='users') }}">View role permissions →</a>
+    {% elif module == 'products' %}<p class="text-muted">Use a unique SKU and choose a category and brand. Adjust stock from Inventory after creating the product.</p>
+    {% else %}<p class="text-muted">Keep the details clear and up to date. Open the details page to review and update this sample record.</p>{% endif %}
+  </aside></div>
+</div>
+{% endblock %}

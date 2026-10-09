@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import stats_grid, record_table with context %}
+{% block title %}Reports · Roel's Guitar Shop{% endblock %}
+{% block content %}
+<div class="management-page fade-in">
+  <div class="page-heading"><div><div class="eyebrow">Finance</div><h1>Reports</h1><p class="text-muted">A clear picture of sales, stock, and shop performance.</p></div><div class="page-actions"><button class="btn btn-secondary" type="button" data-print>{{ icon('print', 17) }}Print</button><a class="btn btn-primary" href="{{ url_for('demo.reports', section=section, **{'from': start, 'to': end, 'export': 'csv'}) }}">{{ icon('download', 17) }}Export report</a></div></div>
+  {% if error %}<div class="flash flash-error" role="alert">{{ error }}</div>{% endif %}
+  <form method="get" class="filter-bar card date-filters"><input type="hidden" name="section" value="{{ section }}"><div class="input-group"><label class="input-label" for="from-date">From</label><input class="input-field" type="date" name="from" id="from-date" value="{{ start }}" required></div><div class="input-group"><label class="input-label" for="to-date">To</label><input class="input-field" type="date" name="to" id="to-date" value="{{ end }}" required></div><button class="btn btn-secondary">Update report</button><span class="text-muted report-range">Sample period: October 2026</span></form>
+  {{ stats_grid(stats) }}
+  <div class="report-charts"><section class="card"><div class="section-heading"><div><h3>Sales over time</h3><p class="text-muted">Gross completed sales · {{ start }} to {{ end }}</p></div>{{ icon('trend') }}</div><div class="bar-chart" role="img" aria-label="Sales by date">{% for bar in chart %}<div class="bar-column"><span class="bar-value">{{ bar.amount|money }}</span><div class="bar-track"><div class="chart-bar" style="height: {{ bar.height }}%" title="{{ bar.label }}: {{ bar.amount|money }}"></div></div><span class="bar-label">{{ bar.label }}</span></div>{% endfor %}</div></section>
+    <section class="card"><div class="section-heading"><div><h3>Payment breakdown</h3><p class="text-muted">Completed sales in this period</p></div>{{ icon('card') }}</div><div class="payment-breakdown">{% for payment in payments %}<div class="payment-report-row"><div class="flex-between"><span>{{ payment.name }}</span><strong>{{ payment.amount|money }}</strong></div><div class="progress-track"><span style="width: {{ payment.amount * 100 / revenue if revenue else 0 }}%; --bar-color: {{ ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b'][loop.index0] }}"></span></div></div>{% endfor %}</div></section>
+  </div>
+  <nav class="page-tabs" aria-label="Report type">{% for key, label in [('sales', 'Sales'), ('inventory', 'Inventory valuation'), ('expenses', 'Expenses'), ('returns', 'Refunds')] %}<a class="{{ 'active' if section == key }}" href="{{ url_for('demo.reports', section=key, **{'from': start, 'to': end}) }}">{{ label }}</a>{% endfor %}</nav>
+  <div class="card table-card"><div class="section-heading"><h3>{{ 'Inventory valuation at cost' if section == 'inventory' else config.title }}</h3><span class="text-muted">{{ rows|length }} records</span></div>{{ record_table(config, rows, section) }}</div>
+</div>
+{% endblock %}

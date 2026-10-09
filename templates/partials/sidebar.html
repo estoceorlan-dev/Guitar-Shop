@@ -4,13 +4,17 @@
     <h1 class="logo-text">Roel's<br><span>Guitar Shop</span></h1>
   </div></div>
   <nav class="sidebar-nav" aria-label="Main navigation">
-    {% if user.role in ['Administrator', 'Manager'] %}
-    <a href="{{ url_for('dashboard') }}" class="nav-item {{ 'active' if request.endpoint == 'dashboard' }}" {% if request.endpoint == 'dashboard' %}aria-current="page"{% endif %}>{{ icon('dashboard') }}<span>Dashboard</span></a>
-    {% endif %}
-    <a href="{{ url_for('pos') }}" class="nav-item {{ 'active' if request.endpoint == 'pos' }}" {% if request.endpoint == 'pos' %}aria-current="page"{% endif %}>{{ icon('cart') }}<span>Point of Sale</span></a>
-    {% if user.role in ['Administrator', 'Manager'] %}
-    <a href="{{ url_for('products') }}" class="nav-item {{ 'active' if request.endpoint == 'products' }}" {% if request.endpoint == 'products' %}aria-current="page"{% endif %}>{{ icon('guitar') }}<span>Products</span></a>
-    {% endif %}
+    {% for group, links in navigation %}
+      {% set visible = namespace(count=0) %}{% for key, label, symbol, roles in links %}{% if user.role in roles %}{% set visible.count = visible.count + 1 %}{% endif %}{% endfor %}
+      {% if visible.count %}<span class="nav-group-label">{{ group }}</span>{% endif %}
+      {% for key, label, symbol, roles in links %}
+        {% if user.role in roles %}
+        {% set active = module|default('') == key or request.endpoint == key %}
+        {% set target = url_for(key) if key in ['dashboard', 'pos'] else url_for('demo.reports') if key == 'reports' else url_for('demo.settings') if key == 'settings' else url_for('demo.list_page', module=key) %}
+        <a href="{{ target }}" class="nav-item {{ 'active' if active }}" {% if active %}aria-current="page"{% endif %}>{{ icon(symbol) }}<span>{{ label }}</span></a>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
   </nav>
   <div class="sidebar-footer">
     <form action="{{ url_for('logout') }}" method="post">{{ csrf() }}<button class="logout-btn">{{ icon('logout', 18) }}<span>Logout</span></button></form>
